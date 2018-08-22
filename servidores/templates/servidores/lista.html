@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Servidores</title>
+</head>
+<body>
+
+<p>Olá {{user.username}}</p>
+
+<a href="{% url 'logout'%}">Sair</a>
+
+    <ul>
+
+        {% for servidor in servidores %}
+
+        <li><a href="{% url 'url_atualizar' servidor.id_unica %}">{{servidor.nome}}</a>
+        <a href="{% url 'url_deletar' servidor.id_unica %}">Apagar</a></li>
+
+        {% endfor %}
+        <a href="{% url 'url_cadastro'%}">Novo Cadastro</a>
+    </ul>
+</body>
+</html>

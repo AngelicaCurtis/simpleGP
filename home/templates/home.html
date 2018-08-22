@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <h1>Seja Bem Vindo ao Simple GP</h1>
+
+    {% if user.is_authenticated %}
+        <p>Olá {{user.username}}</p>
+        <a href="{% url 'logout' %}">Sair</a>
+    {% else %}
+         <a href="{% url 'login' %}">Faça seu Login</a>
+    {% endif%}
+</body>
+</html>
