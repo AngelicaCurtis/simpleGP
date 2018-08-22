@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-
+from decouple import config
+from dj_database_url import parse as dburl
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,12 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'cv(u&85uz2kzp-1iuu-c&(di6r=pnhdmwm1+p34hk3=*2u=s0p'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['simple-gp.herokuapp.com']
 
 
 # Application definition
@@ -75,16 +76,13 @@ WSGI_APPLICATION = 'simpleGP.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'simple_gp',
-        'USER': 'postgres',
-        'PASSWORD': 'sitrucatina',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
+    'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
 }
+
+
 
 
 # Password validation
@@ -138,3 +136,5 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = 'lista'
 
 LOGOUT_REDIRECT_URL = '/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
