@@ -26,7 +26,7 @@ class Servidor(models.Model):
     pis_pasep = models.CharField(max_length=13)
     naturalidade = models.CharField(max_length=200)
     foto = models.ImageField(upload_to="fotos_servidores", null=True, blank=True)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
 
 
     class Meta:
