@@ -11,3 +11,4 @@ class ServidorForm(ModelForm):
         fields = ['id_unica', 'nome', 'sobrenome','data_nasc', 'sexo', 'tipo_sanguineo', 'cpf',
                   'rg', 'pis_pasep', 'naturalidade', 'categoria', 'foto']
 
+

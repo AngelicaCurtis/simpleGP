@@ -1,18 +1,26 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-    <h1>Seja Bem Vindo ao Simple GP</h1>
+{% block title %}Seja Bem Vindo ao Simple GP {% endblock %}
+{% block main %}
 
-    {% if user.is_authenticated %}
-        <p>Olá {{user.username}}</p>
-        <a href="{% url 'logout' %}">Sair</a>
-    {% else %}
-         <a href="{% url 'login' %}">Faça seu Login</a>
-    {% endif%}
-</body>
-</html>
+
+        <div class="row">
+        <div class="col">
+
+        </div>
+        <div class="col-6">
+                <h1>Seja Bem Vindo ao Simple GP</h1>
+                {% if user.is_authenticated %}
+                     <p>Olá {{ user.username}}</p>
+                    <a href="{% url 'logout' %}">Sair</a>
+                    {% else %}
+                     <a href="{% url 'login' %}">Entrar</a>
+                {% endif%}
+        </div>
+        <div class="col-sm">
+
+        </div>
+        </div>
+
+
+{% endblock %}

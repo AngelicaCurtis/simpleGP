@@ -1,24 +1,33 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista Servidores</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-<p>Olá {{user.username}}</p>
+{% block title %}Lista Servidores{% endblock %}
+{% block main %}
 
-<a href="{% url 'logout'%}">Sair</a>
+     <h1 class="display-2">Olá {{user.username}}</h1>
 
-    <ul>
 
-        {% for servidor in servidores %}
 
-        <li><a href="{% url 'url_atualizar' servidor.id_unica %}">{{servidor.nome}}</a>
-        <a href="{% url 'url_deletar' servidor.id_unica %}">Apagar</a></li>
+        <a href="{% url 'logout'%}">
+                <span class="badge badge-pill badge-dark">Sair</span>
+        </a>
+        <ul class="list-group">
+            <li class="list-group-item active">Lista de servidores Campus São Borja</li>
+            {% for servidor in servidores %}
 
-        {% endfor %}
-        <a href="{% url 'url_cadastro'%}">Novo Cadastro</a>
-    </ul>
-</body>
-</html>
+            <li class="list-group-item">
+                <a >{{servidor.nome}} {{servidor.sobrenome}}</a>
+                <a href="{% url 'url_atualizar' servidor.id_unica %}" >
+                    <i class="far fa-edit" ></i>
+                </a>
+                <a href="{% url 'url_deletar' servidor.id_unica %}" class="trash-item">
+                <i class="far fa-trash-alt"></i>
+                </a>
+            </li>
+
+            {% endfor %}
+            <a type="button" class="btn btn-primary" href="{% url 'url_cadastro'%}">Novo Cadastro</a>
+
+        </ul>
+{% endblock %}
+
+

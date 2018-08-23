@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Confirmação</title>
-</head>
-<body>
-    <h1>Você tem certeza que deseja excluir {{servidor.nome}}?</h1>
+{% extends 'base.html' %}
+
+{% block title %}Login {% endblock %}
+{% block main %}
+
+    <h1 class="align-center">Você tem certeza que deseja excluir {{servidor.nome}}?</h1>
     <form method="POST">
         {% csrf_token %}
-        <a href="{% url 'lista' %}">Voltar</a>
-    <button type="submit">Apagar</button>
+        <a class="btn alert-danger" href="{% url 'lista' %}">Voltar</a>
+    <button class="btn alert-success" type="submit">Apagar</button>
     </form>
-</body>
-</html>
+{% endblock %}

@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['simple-gp.herokuapp.com']
+ALLOWED_HOSTS = ['simple-gp.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -38,8 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
+    'bootstrapform',
     'servidores',
-    'home'
+    'home',
+
 ]
 
 MIDDLEWARE = [
@@ -123,9 +126,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    'estaticos',
-]
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'statics'),
+)
 
 MEDIA_URL = '/media/'
 
@@ -138,3 +141,6 @@ LOGIN_REDIRECT_URL = 'lista'
 LOGOUT_REDIRECT_URL = '/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+
