@@ -3,7 +3,9 @@
 {% block title %}Login {% endblock %}
 {% block main %}
 
-    <h1 class="align-center">Você tem certeza que deseja excluir {{servidor.nome}}?</h1>
+
+
+    <div class="alert alert-danger" role="alert">Você tem certeza que deseja excluir {{servidor.nome}}?</div>
     <form method="POST">
         {% csrf_token %}
         <a class="btn alert-danger" href="{% url 'lista' %}">Voltar</a>
