@@ -51,7 +51,7 @@ class Contato(models.Model):
 class DadosBancarios(models.Model):
     banco = models.CharField(max_length=100)
     agencia = models.CharField(max_length=20)
-    conta = models.IntegerField(max_length=10)
+    conta = models.IntegerField()
     municipio = models.CharField(max_length=200)
     servidor = models.OneToOneField(Servidor, on_delete=models.CASCADE, primary_key=True)
 

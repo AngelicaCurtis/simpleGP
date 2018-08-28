@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'bootstrapform',
     'servidores',
     'home',
-    'campi'
+    'campi',
+    'portarias',
+    'progressoes'
 
 ]
 

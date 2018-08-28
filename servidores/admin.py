@@ -1,4 +1,6 @@
 from django.contrib import admin
+
+from progressoes.models import ProgressaoDocente
 from servidores.models import Categoria, Servidor, DadosBancarios, Contato, Formacao
 
 
@@ -25,3 +27,5 @@ class ServidorAdmin(admin.ModelAdmin):
 
 admin.site.register(Categoria)
 admin.site.register(Servidor, ServidorAdmin)
+admin.site.register(ProgressaoDocente)
+
