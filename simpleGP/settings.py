@@ -139,7 +139,7 @@ LOGIN_URL = '/login/'
 
 LOGIN_REDIRECT_URL = 'index'
 
-LOGOUT_REDIRECT_URL = 'sair'
+LOGOUT_REDIRECT_URL = '/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
