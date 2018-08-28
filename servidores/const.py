@@ -3,7 +3,7 @@ SEXO = (
     (u'2', u'M')
 )
 
-TIPO_SANGUINEO =(
+TIPO_SANGUINEO = (
     (u'1', u'A+'),
     (u'2', u'B+'),
     (u'3', u'AB+'),
@@ -13,7 +13,7 @@ TIPO_SANGUINEO =(
     (u'7', u'AB-'),
     (u'8', u'O-')
 )
-TITULACAO =(
+TITULACAO = (
     (u'1', u'Ensino Fundamental'),
     (u'2', u'Ensino Médio'),
     (u'3', u'Técnico'),

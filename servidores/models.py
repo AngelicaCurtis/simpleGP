@@ -13,7 +13,7 @@ class Categoria (models.Model):
     def __str__(self):
         return self.nome
 
-
+# TODO melhorar modelagem
 class Servidor(models.Model):
     id_unica = models.CharField("Identidade Única", primary_key=True, max_length=9)
     nome = models.CharField(max_length=50)
@@ -35,6 +35,8 @@ class Servidor(models.Model):
     def __str__(self):
         return "{} {}".format(self.nome, self.sobrenome)
 
+
+# Fixme melhorar relação com servidor
 class Contato(models.Model):
     telefone = models.CharField(max_length=30)
     celular = models.CharField(max_length=30)
