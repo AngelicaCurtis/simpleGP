@@ -23,10 +23,13 @@ def home(request):
 # lista usando ListView
 @method_decorator(login_required, name='dispatch')
 class ServidorList(LoginRequiredMixin, ListView):
+
     model = Servidor
+# list(Servidor.objects.all().order_by('nome'))
 
 class ServidorOrder(ListView):
-    pass
+    model = Servidor
+    model.objects.all().order_by('nome')
 
 
 # detalha servidor
@@ -56,26 +59,23 @@ class Delete(DeleteView):
         return reverse_lazy('lista-servidores')
 
 
-# fixme implementar formulario editando campos pelo html
-# @login_required
-# class CadastroServidor(View):
-#     def post(self, request):
-#         data= {}
-#         data['form_item'] = ServidorForm()
-#         data['id_unica'] = request.POST['id_unica']
-#         data['nome'] = request.POST['nome']
-#         data['sobrenome'] = request.POST['sobrenom']
-#         data['data_nasc'] = request.POST['data_nasc']
-#         data['sexo'] = request.POST['sexo']
-#         data['tipo_sanguineo'] = request.POST['tipo_sanguineo']
-#         data['cpf'] = request.POST['cpf']
-#         data['rg'] = request.POST['rg']
-#         data['pis_pasep'] = request.POST['pis_pasep']
-#         data['naturalidade'] = request.POST['naturalidade']
-#         data['foto'] = request.POST['foto']
-#
-#     if ServidorForm.is_valid():
-#         ServidorForm.save()
+#fixme implementar formulario editando campos pelo html
+@login_required
+class CadastroServidor(View):
+    def post(self, request):
+        data= {}
+        data['form_item'] = ServidorForm()
+        data['id_unica'] = request.POST['id_unica']
+        data['nome'] = request.POST['nome']
+        data['sobrenome'] = request.POST['sobrenome']
+        data['data_nasc'] = request.POST['data_nasc']
+        data['sexo'] = request.POST['sexo']
+        data['tipo_sanguineo'] = request.POST['tipo_sanguineo']
+        data['cpf'] = request.POST['cpf']
+        data['rg'] = request.POST['rg']
+        data['pis_pasep'] = request.POST['pis_pasep']
+        data['naturalidade'] = request.POST['naturalidade']
+        data['foto'] = request.POST['foto']
 
 
 

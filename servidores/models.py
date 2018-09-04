@@ -57,6 +57,7 @@ class DadosBancarios(models.Model):
 
     def __str__(self):
         return self.banco
+
 class Formacao(models.Model):
     titulacao = models.CharField(choices=const.TITULACAO, max_length=1)
     descricao = models.TextField(max_length=300)
@@ -64,3 +65,6 @@ class Formacao(models.Model):
     data_conclusao = models.DateField()
     area_conhecimento = models.CharField(max_length=100)
     servidor = models.OneToOneField(Servidor, on_delete=models.CASCADE, primary_key=True)
+
+    def __str__(self):
+        return self.titulacao
