@@ -1,17 +1,14 @@
-from django.contrib import admin
 from django.urls import path
-from servidores.views import atualizar_servidor, deletar_servidor, ServidorList, \
-    ServidorDetail, ServidorCreate, ServidorUpdate, Delete, selecao, CadastroServidor
+
+from progressoes.views import CadastroTAE, ProgressaoList, Atualizar, Deletar, ProgressaoDetalhes, Historico
 
 urlpatterns = [
-    path('lista-servidores/', ServidorList.as_view(), name="lista-servidores"),
-    path('lista-ordenada/', ServidorList.as_view(template_name="servidores/lista-ordenada.html"), name="lista-ordenada"),
-    path('servidor-detail/<pk>', ServidorDetail.as_view(), name="servidor-detalhes"),
-    path('servidor-create/', ServidorCreate.as_view(), name="servidor-form"),
-    path('servidor_update_form/<pk>', ServidorUpdate.as_view(), name="servidor-update"),
-    path('delete/<pk>', Delete.as_view(template_name="servidores/delete.html"), name="delete"),
-    path('atualizar/<int:id>', atualizar_servidor, name="url_atualizar"),
-    path('deletar/<int:id>', deletar_servidor, name="url_deletar"),
-    path('docente/', selecao, name="selecao"),
+    path('cadastro-tae/', CadastroTAE.as_view(template_name="progressoes/cadastro-progressao-tae.html"),
+         name="cadastro-progressao-tae"),
+    path('lista-tae/', ProgressaoList.as_view(template_name="progressoes/lista-tae.html"), name="lista-tae"),
+    path('historico/', Historico.as_view(template_name="progressoes/historico.html"), name="historico"),
+    path('atualizar/<pk>', Atualizar.as_view(template_name="progressoes/atualizar.html"), name="atualizar"),
+    path('visualizar/<pk>', ProgressaoDetalhes.as_view(template_name="progressoes/historico.html"), name="visualizar"),
+    path('deletar/<pk>', Deletar.as_view(template_name="progressoes/delete.html"), name="deletar"),
 
 ]

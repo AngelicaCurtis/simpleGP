@@ -27,17 +27,14 @@ from servidores import urls as servidores_urls
 from servidores.views import home
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('login/', auth_views.LoginView.as_view(), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(),{'next_page': 'login'}, name='sair'),
-    path('home/', home),
-    path('', include(home_urls)),
-    path('progressoes/', include(progressoes_urls)),
-    path('servidores/', include(servidores_urls)),
-    path('index/', TemplateView.as_view(template_name='index.html')), #usando TemplateView
+                  path('admin/', admin.site.urls),
+                  path('login/', auth_views.LoginView.as_view(), name='login'),
+                  path('logout/', auth_views.LogoutView.as_view(), {'next_page': 'login'}, name='sair'),
+                  path('home/', home),
+                  path('', include(home_urls)),
+                  path('progressoes/', include(progressoes_urls)),
+                  path('servidores/', include(servidores_urls)),
+                  path('index/', TemplateView.as_view(template_name='index.html')),  # usando TemplateView
                   path('__debug__/', include(debug_toolbar.urls)),
 
-
-
-
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)### usado somente em desenvolvimento
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # usado somente em desenvolvimento

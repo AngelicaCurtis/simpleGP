@@ -4,11 +4,10 @@
 {% block main %}
 
 
-
-    <div class="alert alert-danger" role="alert">Você tem certeza que deseja excluir {{servidor.nome}}?</div>
-    <form method="POST">
-        {% csrf_token %}
-        <a class="btn alert-danger" href="{% url 'lista-servidores' %}">Voltar</a>
+<div class="alert alert-danger" role="alert">Você tem certeza que deseja excluir {{servidor.nome}}?</div>
+<form method="POST">
+    {% csrf_token %}
+    <a class="btn alert-danger" href="{% url 'lista-servidores' %}">Voltar</a>
     <button class="btn alert-success" type="submit">Apagar</button>
-    </form>
+</form>
 {% endblock %}

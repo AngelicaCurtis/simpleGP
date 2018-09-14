@@ -7,8 +7,8 @@
 </head>
 <body>
 
-    <form method="post">
-        {% csrf_token %}
+<form method="post">
+    {% csrf_token %}
     <p class="alert-danger">Você tem certeza que deseja deletar "{{ object }}"?</p>
     <input type="submit" value="Confirm">
 </form>

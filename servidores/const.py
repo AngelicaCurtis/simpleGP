@@ -23,5 +23,3 @@ TITULACAO = (
     (u'7', u'Doutorado'),
     (u'8', u'Pós-doutorado ')
 )
-
-

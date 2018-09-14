@@ -1,11 +1,13 @@
-from django.contrib import admin
 from django.urls import path
-from servidores.views import atualizar_servidor, deletar_servidor, ServidorList, \
-    ServidorDetail, ServidorCreate, ServidorUpdate, Delete, selecao, CadastroServidor
+
+from servidores.views import atualizar_servidor, deletar_servidor, \
+    ServidorDetail, ServidorCreate, ServidorUpdate, Delete, selecao, servidores_list
 
 urlpatterns = [
-    path('lista-servidores/', ServidorList.as_view(), name="lista-servidores"),
-    path('lista-ordenada/', ServidorList.as_view(template_name="servidores/lista-ordenada.html"), name="lista-ordenada"),
+    # path('lista-servidores/', ServidorList.as_view(), name="lista-
+    path('servidor-list/', servidores_list, name="lista-servidores"),
+    # path('lista-ordenada/', ServidorList.as_view(template_name="servidores/lista-ordenada.html"),
+    #      name="lista-ordenada"),
     path('servidor-detail/<pk>', ServidorDetail.as_view(), name="servidor-detalhes"),
     path('servidor-create/', ServidorCreate.as_view(), name="servidor-form"),
     # path('servidor-cadastro/', CadastroServidor.as_view(), name="servidor-cadastro"),

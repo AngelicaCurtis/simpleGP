@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% load bootstrap %}
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Deletar Progressao</title>
+</head>
+<body>
+
+<form method="post">
+    {% csrf_token %}
+    <p class="alert-danger">Você tem certeza que deseja deletar "{{ object }}"?</p>
+    <input type="submit" value="Confirm">
+</form>
+
+</body>
+</html>

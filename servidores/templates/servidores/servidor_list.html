@@ -1,14 +1,15 @@
 {% extends 'cabecalho.html' %}
 {% load bootstrap %}
+{% load minhas_tags %}
 
 {% block title %}Lista Servidores{% endblock %}
 
 
 {% block main %}
 
- <!-- Page Header-->
+<!-- Page Header-->
 
-            <!-- Page Header-->
+<!-- Page Header-->
 
 <section class="dashboard-counts no-padding-bottom">
     <div class="container-fluid">
@@ -26,6 +27,19 @@
                                     href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a
                                     href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
                         </div>
+                    </div>
+
+                    <div class="dataTables_filter float-right">
+                        <form action="">
+
+
+
+                        <label>
+                        Pesquisar
+                        <input type="search" name="busca" class="form-control form-control-sm" placeholder aria-controls="">
+                        </label>
+                            <input type="submit" value="Ir" class="class="btn btn-primary" />
+                        </form>
                     </div>
                     <div class="card-header d-flex align-items-center">
                         <h3 class="h4">Servidores</h3>
@@ -46,25 +60,25 @@
                                 <tbody>
                                 <tr>
 
-                                    {% for servidor in object_list %}
-                                    <th scope="row">1</th>
+                                    {% for servidor in servidores %}
+                                    <th scope="row">{{servidor.siape}}</th>
 
                                     <td>{{servidor.nome}} {{servidor.sobrenome}}</td>
 
                                     <td>{{servidor.categoria}}</td>
 
 
-                                    <td><a href="{% url 'servidor-detalhes' servidor.id_unica %}">
+                                    <td><a href="{% url 'servidor-detalhes' servidor.id %}">
                                         <i class="far fa-eye"></i>
                                     </a>
                                     </td>
 
-                                    <td><a href="{% url 'servidor-update' servidor.id_unica %}">
+                                    <td><a href="{% url 'servidor-update' servidor.id %}">
                                         <i class="far fa-edit"></i>
                                     </a>
                                     </td>
 
-                                    <td><a href="{% url 'delete' servidor.id_unica %}" class="trash-item">
+                                    <td><a href="{% url 'delete' servidor.siape %}" class="trash-item">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                     </td>
@@ -72,7 +86,9 @@
                                 </tr>
 
                                 {% empty%}
-                                <li>Desculpe, ainda não há servidores cadastrados!</li>
+                                <tr>
+                                    <td colspan="6">Desculpe, ainda não há servidores cadastrados!</td>
+                                </tr>
                                 {% endfor %}
 
                                 </tbody>
@@ -84,10 +100,5 @@
         </div>
     </div>
 </section>
-
-
-
-
-
 {% endblock %}
 

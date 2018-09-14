@@ -25,12 +25,12 @@ NIVEL_DOCENTE = (
 )
 
 
-TIPO_PROGRESSAO_TAE = (
-    (u'1', u'Progressão por Mérito'),
-    (u'2', u'Promoção por Capacitação'),
-
-
-)
+# TIPO_PROGRESSAO_TAE = (
+#     (u'1', u'Progressão por Mérito'),
+#     (u'2', u'Promoção por Capacitação'),
+#
+#
+# )
 
 NIVEL_TAE = (
     (u'1', u'I'),

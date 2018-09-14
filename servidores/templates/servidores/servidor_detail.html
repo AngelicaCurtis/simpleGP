@@ -6,152 +6,120 @@
 
 {% block main %}
 
- <!-- Form Elements -->
-                <div class="col-lg-12">
-                  <div class="card">
-                    <div class="card-close">
-                      <div class="dropdown">
-                        <button type="button" id="closeCard5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
-                        <div aria-labelledby="closeCard5" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
-                      </div>
-                    </div>
-                    <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Ficha Servidor</h3>
-                    </div>
-                    <div class="card-body">
-                      <form class="form-horizontal">
+<section class="dashboard-counts no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row bg-white has-shadow">
 
-
-                          <div class="card-body text-right">
-                          <div class="client-avatar"><img src="{{object.foto}}" alt="..." class="img-fluid rounded-circle">
-                            <div class="status bg-green"></div>
-                          </div>
-                          <div class="client-title">
-                            <h3> {{object.nome}} {{object.sobrenome}}</h3><span>{{object.categoria}}</span>
-                          </div>
-                        </div>
-
-
-                          <div class="form-group row">
-                          <label class="col-sm-3 form-control-label">Categoria</label>
-                          <div class="col-sm-3">
-                            {{object.categoria}}
-                          </div>
-                        </div>
-
-                       <div class="form-group row">
-                          <label class="col-sm-3 form-control-label">Identidade Única</label>
-                          <div class="col-sm-3">
-                            {{object.id_unica}}
-                          </div>
-                        </div>
-
-                        <div class="form-group row">
-                          <label class="col-sm-3 form-control-label">Nome</label>
-                          <div class="col-sm-9">
-                            {{object.nome}} {{object.sobrenome}}
-                          </div>
-                        </div>
-                          <div class="form-group row">
-                          <label class="col-sm-3 form-control-label">Data Nascimento</label>
-                          <div class="col-sm-9">
-                            {{object.data_nasc}}
-                          </div>
-                        </div>
-
-                          <div class="form-group row">
-                          <label class="col-sm-3 form-control-label">Sexo</label>
-                          <div class="col-sm-9">
-                            {{object.sexo}}
-                          </div>
-                        </div>
-
-                          <div class="form-group row">
-                          <label class="col-sm-3 form-control-label">Tipo Sanguineo</label>
-                          <div class="col-sm-9">
-                            {{object.tipo_sanguineo}}
-                          </div>
-                        </div>
-
-                          <div class="form-group row">
-                          <label class="col-sm-3 form-control-label">CPF</label>
-                          <div class="col-sm-9">
-                             {{object.cpf}}
-                          </div>
-                        </div>
-
-                          <div class="form-group row">
-                          <label class="col-sm-3 form-control-label">Identidade</label>
-                          <div class="col-sm-9">
-                              {{object.rg}}
-                          </div>
-                        </div>
-
-                          <div class="form-group row">
-                          <label class="col-sm-3 form-control-label">Pis/Pasep</label>
-                          <div class="col-sm-9">
-                            {{object.pis_pasep}}
-                          </div>
-                        </div>
-
-                          <div class="form-group row">
-                          <label class="col-sm-3 form-control-label">Naturalidade</label>
-                          <div class="col-sm-9">
-                            {{object.naturalidade}}
-                          </div>
-                          </div>
-
-
-
-
-
-
-                          <div class="form-group row">
-                          <label class="col-sm-3 form-control-label">Editar</label>
-                          <div class="col-sm-9">
-
-                              <a href="{% url 'lista-servidores' %}" class="btn btn-secondary">Voltar</a>
-
-                            <a class="btn btn-primary" href="{% url 'servidor-update' servidor.id_unica %}" >
-                                    <i class="far fa-edit" ></i>Editar
-                            </a>
-                        </div>
-
-
-                        </div>
-                      </form>
-                    </div>
-                  </div>
+    <!-- Form Elements -->
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-close">
+                <div class="dropdown">
+                    <button type="button" id="closeCard5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                    <div aria-labelledby="closeCard5" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#"
+                                                                                                              class="dropdown-item remove">
+                        <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i
+                            class="fa fa-gear"></i>Edit</a></div>
                 </div>
+            </div>
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4">Ficha Servidor</h3>
+            </div>
+            <div class="card-body">
+                <form class="form-horizontal">
 
 
+                    <div class="card-body text-right">
+                        <div class="client-avatar"><img src="{{object.foto}}" alt="..." class="img-fluid rounded-circle">
+                            <div class="status bg-green"></div>
+                        </div>
+                        <div class="client-title">
+                            <h3> {{object.nome}} {{object.sobrenome}}</h3>
+
+                            {% if object.categoria == 2 or 4 %}
+                                <span>{{object.cargo}} </span>
+                            {% elif object.categoria == 1 or 3 or 5 %}
+                                <span>{{object.area}} </span>
+                            {% endif %}
+                        </div>
+                    </div>
 
 
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label">Categoria</label>
+                        <div class="col-sm-3">
+                            {{object.categoria}}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label">SIAPE</label>
+                        <div class="col-sm-3">
+                            {{object.siape}}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label">Nome</label>
+                        <div class="col-sm-9">
+                            {{object.nome}} {{object.sobrenome}}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label">Data Nascimento</label>
+                        <div class="col-sm-9">
+                            {{object.data_nasc}}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label">Sexo</label>
+                        <div class="col-sm-9">
+                            {{object.sexo}}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label">Tipo Sanguineo</label>
+                        <div class="col-sm-9">
+                            {{object.tipo_sanguineo}}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label">E-mail</label>
+                        <div class="col-sm-9">
+                            {{object.email}}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 form-control-label">Naturalidade</label>
+                        <div class="col-sm-9">
+                            {{object.naturalidade}}
+                        </div>
+                    </div>
 
 
+                    <div class="form-group row">
+                        <div class="col-sm-9">
+
+                            <a href="{% url 'lista-servidores' %}" class="btn btn-secondary">Voltar</a>
+
+                            <a class="btn btn-primary" href="{% url 'servidor-update' servidor.siape %}">
+                                <i class="far fa-edit"></i>Editar</a>
+                        </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</section>
 
 
 {% endblock%}

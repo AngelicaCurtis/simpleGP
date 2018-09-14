@@ -7,77 +7,75 @@
 {% block main %}
 
 
-
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-close">
-                        <div class="dropdown">
-                            <button type="button" id="closeCard2" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i>
-                            </button>
-                            <div aria-labelledby="closeCard2" class="dropdown-menu dropdown-menu-right has-shadow"><a
-                                    href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a
-                                    href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
-                        </div>
-                    </div>
-                    <div class="card-header d-flex align-items-center">
-                        <h3 class="h4">Servidores</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Nome</th>
-                                    <th>Categoria</th>
-                                    <th>Visualizar</th>
-                                    <th>Editar</th>
-                                    <th>Deletar</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-
-                                    {% for servidor in object_list %}
-                                    <th scope="row">1</th>
-
-                                    <td>{{servidor.nome}} {{servidor.sobrenome}}
-                                        <a href="{% url 'servidor-detalhes' servidor.id_unica %}">
-                                            <i class="far fa-eye"></i>
-                                        </a>
-                                    </td>
-
-                                    <td>{{servidor.categoria}}</td>
-
-                                    <td><a href="{% url 'servidor-update' servidor.id_unica %}">
-                                        <i class="far fa-edit"></i>
-                                    </a>
-                                    </td>
-
-                                    <td><a href="{% url 'servidor-detalhes' servidor.id_unica %}">
-                                        <i class="far fa-eye"></i>
-                                    </a>
-                                    </td>
-
-                                    <td><a href="{% url 'delete' servidor.id_unica %}" class="trash-item">
-                                        <i class="far fa-trash-alt"></i>
-                                    </a>
-                                    </td>
-
-                                </tr>
-
-                                {% empty%}
-                                <li>Desculpe, ainda não há servidores cadastrados!</li>
-                                {% endfor %}
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-close">
+            <div class="dropdown">
+                <button type="button" id="closeCard2" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i>
+                </button>
+                <div aria-labelledby="closeCard2" class="dropdown-menu dropdown-menu-right has-shadow"><a
+                        href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a
+                        href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
             </div>
+        </div>
+        <div class="card-header d-flex align-items-center">
+            <h3 class="h4">Servidores</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Categoria</th>
+                        <th>Visualizar</th>
+                        <th>Editar</th>
+                        <th>Deletar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
 
+                        {% for servidor in object_list %}
+                        <th scope="row">1</th>
+
+                        <td>{{servidor.nome}} {{servidor.sobrenome}}
+                            <a href="{% url 'servidor-detalhes' servidor.siape %}">
+                                <i class="far fa-eye"></i>
+                            </a>
+                        </td>
+
+                        <td>{{servidor.categoria}}</td>
+
+                        <td><a href="{% url 'servidor-update' servidor.siape %}">
+                            <i class="far fa-edit"></i>
+                        </a>
+                        </td>
+
+                        <td><a href="{% url 'servidor-detalhes' servidor.siape %}">
+                            <i class="far fa-eye"></i>
+                        </a>
+                        </td>
+
+                        <td><a href="{% url 'delete' servidor.siape %}" class="trash-item">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                        </td>
+
+                    </tr>
+
+                    {% empty%}
+                    <li>Desculpe, ainda não há servidores cadastrados!</li>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 {% endblock %}

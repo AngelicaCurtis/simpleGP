@@ -2,7 +2,6 @@
 {% load bootstrap %}
 
 
-
 {% block title %}Cadastro Servidor{% endblock %}
 
 {% block main %}
@@ -11,59 +10,56 @@
     <div class="container-fluid">
         <div class="row bg-white has-shadow">
 
-    <h3>Cadastro Novo Servidor</h3>
-    <form method="POST" enctype="multipart/form-data">
+            <h3>Cadastro Novo Servidor</h3>
+            <form method="POST" enctype="multipart/form-data">
 
-    {% csrf_token %}
+                {% csrf_token %}
 
-         <div class="form-group">
+                <div class="form-group">
 
-             <label for="id_unica">Identidade Única</label>
-             <input type="text" name="id_unica" id="id_unica">
+                    <label for="siape">Identidade Única</label>
+                    <input type="text" name="siape" id="siape">
 
-             <label for="nome">Nome</label>
-             <input type="text" name="nome" id="nome">
+                    <label for="nome">Nome</label>
+                    <input type="text" name="nome" id="nome">
 
-              <label for="sobrenome">Sobrenome</label>
-             <input type="text" name="sobrenome" id="sobrenome">
+                    <label for="sobrenome">Sobrenome</label>
+                    <input type="text" name="sobrenome" id="sobrenome">
 
-              <label for="data_nasc">Data Nascimento</label>
-             <input type="date" name="data_nasc" id="data_nasc">
+                    <label for="data_nasc">Data Nascimento</label>
+                    <input type="date" name="data_nasc" id="data_nasc">
 
-              <label for="sexo">Sexo</label>
-              <select name="sexo" id="sexo">
-                 {% for valor, tipo in sexo %}
-                 <option value="{{ valor }}">{{ tipo }}</option>
-                {% endfor %}
-              </select>
+                    <label for="sexo">Sexo</label>
+                    <select name="sexo" id="sexo">
+                        {% for valor, tipo in sexo %}
+                        <option value="{{ valor }}">{{ tipo }}</option>
+                        {% endfor %}
+                    </select>
 
-              <label for="tipo_sanguineo">Tipo Sanguineo</label>
-             <select name="tipo_sanguineo" id="tipo_sanguineo">
-                 {% for valor, tipo in tipo_sanguineo %}
-                 <option value="{{ valor }}">{{ tipo }}</option>
-                {% endfor %}
-             </select>
-              <label for="cpf">CPF</label>
-             <input type="text" name="cpf" id="cpf">
-              <label for="rg">Identidade</label>
-             <input type="text" name="rg" id="rg">
-              <label for="pis_pasep">PIS/PASEP</label>
-             <input type="text" name="pis_pasep" id="pis_pasep">
-              <label for="naturalidade">Naturalidade</label>
-             <input type="text" name="naturalidade" id="naturalidade">
-              <label for="foto">Foto Perfil</label>
-             <input type="file" name="foto" id="foto">
-
-
+                    <label for="tipo_sanguineo">Tipo Sanguineo</label>
+                    <select name="tipo_sanguineo" id="tipo_sanguineo">
+                        {% for valor, tipo in tipo_sanguineo %}
+                        <option value="{{ valor }}">{{ tipo }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="cpf">CPF</label>
+                    <input type="text" name="cpf" id="cpf">
+                    <label for="rg">Identidade</label>
+                    <input type="text" name="rg" id="rg">
+                    <label for="pis_pasep">PIS/PASEP</label>
+                    <input type="text" name="pis_pasep" id="pis_pasep">
+                    <label for="naturalidade">Naturalidade</label>
+                    <input type="text" name="naturalidade" id="naturalidade">
+                    <label for="foto">Foto Perfil</label>
+                    <input type="file" name="foto" id="foto">
 
 
+                    <button class="btn btn-success" type="submit">Salvar</button>
+                    <a href="{% url 'lista-servidores' %}" class="btn btn-danger">Cancelar</a>
+                </div>
 
-          <button class="btn btn-success" type="submit">Salvar</button>
-          <a href="{% url 'lista-servidores' %}" class="btn btn-danger">Cancelar</a>
-         </div>
 
-
-    </form>
+            </form>
 
         </div>
     </div>

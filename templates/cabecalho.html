@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load nav_active %}
 <html>
 <head>
     <meta charset="pt-br">
@@ -140,11 +141,12 @@
                         </li>
                         <!-- Languages dropdown    -->
 
-                       <span class="d-none d-sm-inline-block">Olá {{user.username}}</span></a>
+                        <span class="d-none d-sm-inline-block">Olá {{user.username}}</span></a>
 
 
                         <!-- Logout    -->
-                        <li class="nav-item"><a href="{% url 'sair' %}" class="nav-link logout"> <span class="d-none d-sm-inline">Sair</span><i class="fa fa-sign-out"></i></a></li>
+                        <li class="nav-item"><a href="{% url 'sair' %}" class="nav-link logout"> <span
+                                class="d-none d-sm-inline">Sair</span><i class="fa fa-sign-out"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -164,23 +166,44 @@
             </div>
             <!-- Sidebar Navidation Menus--><span class="heading">Menu</span>
             <ul class="list-unstyled">
-                <li class="active"><a href="{% url 'index'%}"> <i class="icon-home"></i>Home </a></li>
-
-
+                <li class="{% nav_active request 'index' %}"><a href="{% url 'index'%}"> <i class="icon-home"></i>Home
+                </a></li>
                 <li><a href="#servidores" aria-expanded="false" data-toggle="collapse"> <i
                         class="icon-interface-windows"></i>Servidores</a>
-                    <ul id="servidores" class="collapse list-unstyled ">
-                        <li><a href="{%url 'lista-servidores'%}">Consultar</a></li>
-                        <li><a href="{%url 'servidor-form'%}">Cadastrar</a></li>
+                    <ul id="servidores"
+                        class="collapse list-unstyled {% nav_active request 'lista-servidores|servidor-form' 'show' %}">
+                        <li class="{% nav_active request 'lista-servidores' %}"><a href="{%url 'lista-servidores'%}">Consultar</a>
+                        </li>
+                        <li class="{% nav_active request 'servidor-form' %}"><a
+                                href="{%url 'servidor-form'%}">Cadastrar</a></li>
                         <li><a href="#">Relatórios</a></li>
                     </ul>
                 </li>
-                <li><a href="#progressoes" aria-expanded="false" data-toggle="collapse"> <i
-                        class="icon-interface-windows"></i>Progressões</a>
-                    <ul id="progressoes" class="collapse list-unstyled ">
-                        <li><a href="{%url 'lista-servidores'%}">Docente</a></li>
-                        <li><a href="{%url 'servidor-form'%}">TAE</a></li>
-                        <li><a href="#">Cadastrar</a></li>
+                <li><a href="#progressoes" aria-expanded="false" data-toggle="collapse">
+                    <i class="icon-interface-windows"></i>Progressões</a>
+                    <ul id="progressoes"
+                        class="collapse list-unstyled {% nav_active request 'lista-tae|cadastro-progressao-tae|lista-docente|cadastro-progressao-docente' 'show' %}">
+                        <li><a href="#docente" aria-expanded="false" data-toggle="collapse">
+                            <i class="icon-interface-windows"></i>Docente</a>
+                            <ul id="docente"
+                                class="collapse list-unstyled {% nav_active request 'lista-docente|cadastro-progressao-docente' 'show' %}">
+                                <li class="{% nav_active request 'lista-docente' %}"><a href="{%url 'lista-tae'%}">Cadastar</a>
+                                </li>
+                                <li class="{% nav_active request 'cadastro-progressao-docente' %}"><a
+                                        href="{%url 'cadastro-progressao-tae'%}">Listar</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#tae" aria-expanded="false" data-toggle="collapse">
+                            <i class="icon-interface-windows"></i>TAE</a>
+                            <ul id="tae"
+                                class="collapse list-unstyled {% nav_active request 'lista-tae|cadastro-progressao-tae' 'show' %}">
+                                <li class="{% nav_active request 'cadastro-progressao-tae' %}"><a
+                                        href="{%url 'cadastro-progressao-tae'%}">Cadastar</a></li>
+                                <li class="{% nav_active request 'lista-tae' %}"><a
+                                        href="{%url 'lista-tae'%}">Listar</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Todas</a></li>
                     </ul>
                 </li>
 
@@ -192,7 +215,7 @@
 
             <span class="heading">Extras</span>
             <ul class="list-unstyled">
-               <li><a href="tables.html"> <i class="icon-grid"></i>Funções Gratificadas</a></li>
+                <li><a href="tables.html"> <i class="icon-grid"></i>Funções Gratificadas</a></li>
                 <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Formação</a></li>
                 <li><a href="forms.html"> <i class="icon-padnote"></i>...</a></li>
             </ul>
@@ -206,12 +229,12 @@
             </header>
 
             <!--<section>-->
-                <!--<div class="container-fluid">-->
-                    <!--<div class="row bg-white has-shadow">-->
-                        {% block main %}
-                        {% endblock %}
-                    <!--</div>-->
-                <!--</div>-->
+            <!--<div class="container-fluid">-->
+            <!--<div class="row bg-white has-shadow">-->
+            {% block main %}
+            {% endblock %}
+            <!--</div>-->
+            <!--</div>-->
             <!--</section>-->
 
 

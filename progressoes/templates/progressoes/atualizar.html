@@ -1,0 +1,20 @@
+{% extends 'cabecalho.html' %}
+{% load bootstrap %}
+
+
+{% block title %}Progressão TAE | Atualização{% endblock %}
+
+{% block main %}
+<h3>Progressão TAE Atualização</h3>
+<form method="POST" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    <div class="form-group">
+        {{ form|bootstrap }}
+        <input type="submit" value="Update">
+    </div>
+
+
+</form>
+{% endblock %}
