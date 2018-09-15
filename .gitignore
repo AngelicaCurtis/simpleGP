@@ -4,3 +4,4 @@
 vEnv
 media
 .env
+.debug_toolbar
