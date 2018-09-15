@@ -37,9 +37,9 @@
                         <div class="client-title">
                             <h3> {{object.nome}} {{object.sobrenome}}</h3>
 
-                            {% if object.categoria == 2 or 4 %}
+                            {% if object.categoria == '2' or '4' %}
                                 <span>{{object.cargo}} </span>
-                            {% elif object.categoria == 1 or 3 or 5 %}
+                            {% elif object.categoria == '1' or '3' or '5' %}
                                 <span>{{object.area}} </span>
                             {% endif %}
                         </div>

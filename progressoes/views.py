@@ -15,8 +15,10 @@ class CadastroTAE(CreateView):
 class ProgressaoList(ListView):
     model = ProgressaoTAE
 
-    def get(self, request, *args, **kwargs):
-        ProgressaoTAE.objects.filter(name__unaccent__icontains=())
+    ProgressaoTAE = ProgressaoTAE.objects.order_by('nome')
+
+    # def get(self, request, *args, **kwargs):
+    #     ProgressaoTAE.objects.filter(servidor__icontains=("Angelica"))
 
 
 class Historico(ListView):

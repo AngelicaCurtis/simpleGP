@@ -5,7 +5,7 @@ from servidores.views import atualizar_servidor, deletar_servidor, \
 
 urlpatterns = [
     # path('lista-servidores/', ServidorList.as_view(), name="lista-
-    path('servidor-list/', servidores_list, name="lista-servidores"),
+    path('lista-servidores/', servidores_list, name="lista-servidores"),
     # path('lista-ordenada/', ServidorList.as_view(template_name="servidores/lista-ordenada.html"),
     #      name="lista-ordenada"),
     path('servidor-detail/<pk>', ServidorDetail.as_view(), name="servidor-detalhes"),

@@ -2,6 +2,7 @@ from typing import Any, Union
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 from django.db.models import QuerySet
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -87,12 +88,17 @@ class Delete(DeleteView):
 @login_required
 def servidores_list(request):
     termo_busca = request.GET.get("busca", None)
+    # lista_servidores = Servidor.objects.all()
 
     if termo_busca:
-        servidores = Servidor.objects.all()
-        servidores = Servidor.objects.filter(nome__contains=termo_busca)
+        lista_servidores = Servidor.objects.all()
+        lista_servidores = Servidor.objects.filter(nome__icontains=termo_busca) or Servidor.objects.filter(sobrenome__iexact=termo_busca)
+
     else:
-        servidores = Servidor.objects.all()
+        lista_servidores = Servidor.objects.order_by('nome')
+    paginator = Paginator(lista_servidores, 5)
+    page = request.GET.get('page')
+    servidores = paginator.get_page(page)
     return render(request, 'servidores/servidor_list.html', {'servidores': servidores})
 
 

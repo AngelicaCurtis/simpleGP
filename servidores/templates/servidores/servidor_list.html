@@ -33,12 +33,15 @@
                         <form action="">
 
 
-
-                        <label>
-                        Pesquisar
-                        <input type="search" name="busca" class="form-control form-control-sm" placeholder aria-controls="">
-                        </label>
-                            <input type="submit" value="Ir" class="class="btn btn-primary" />
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">
+                                <i class="fas fa-search"></i>
+                            </span>
+                                </div>
+                                <input type="text" name="busca" class="form-control" placeholder="Pesquisar"
+                                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
                         </form>
                     </div>
                     <div class="card-header d-flex align-items-center">
@@ -49,7 +52,7 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>SIAPE</th>
                                     <th>Nome</th>
                                     <th>Categoria</th>
                                     <th>Visualizar</th>
@@ -85,14 +88,48 @@
 
                                 </tr>
 
+
                                 {% empty%}
                                 <tr>
                                     <td colspan="6">Desculpe, ainda não há servidores cadastrados!</td>
                                 </tr>
                                 {% endfor %}
-
                                 </tbody>
                             </table>
+
+
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=1"
+                                           tabindex="-1">Inicio</a>
+                                    </li>
+
+                                    {% for i in servidores.paginator.page_range %}
+                                    {% if i <= servidores.number|add:5 and i >= servidores.number|add:-5 %}
+                                    <li
+                                            {% if servidores.number == forloop.counter %}
+                                            class="page-item active"
+                                            {% else %}
+                                            class="page-item"
+                                            {% endif %}}>
+                                        <a class="page-link"
+                                           href="?page={{ forloop.counter }}">
+                                            {{ forloop.counter }}
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                    {% endfor %}
+
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           href="?page={{ servidores.paginator.num_pages }}">Fim</a>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                            <a href="{% url 'lista-servidores' %}" class="btn btn-primary float-right">Voltar</a>
+
                         </div>
                     </div>
                 </div>
