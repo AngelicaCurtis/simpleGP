@@ -92,7 +92,8 @@ def servidores_list(request):
 
     if termo_busca:
         lista_servidores = Servidor.objects.all()
-        lista_servidores = Servidor.objects.filter(nome__icontains=termo_busca) or Servidor.objects.filter(sobrenome__iexact=termo_busca)
+        lista_servidores = Servidor.objects.filter(nome__icontains=termo_busca) or Servidor.objects.filter(
+                sobrenome__icontains=termo_busca) or Servidor.objects.filter(categoria__id=termo_busca)
 
     else:
         lista_servidores = Servidor.objects.order_by('nome')
