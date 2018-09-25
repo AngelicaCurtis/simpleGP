@@ -5,59 +5,38 @@ from django.dispatch import receiver
 
 from portarias.models import Portaria
 from progressoes import const
+from progressoes.const import TIPO_PROGRESSAO_TAE
 from servidores.models import Servidor
 
 
-class ProgressaoDocente(models.Model):
+class Progressao(models.Model):
     servidor = models.ForeignKey(Servidor, on_delete=models.PROTECT)
-    tipo_progressao = models.CharField(choices=const.TIPO_PROGRESSAO_DOC, max_length=1)
-    classe = models.CharField(choices=const.CLASSE_DOCENTE, max_length=1)
-    nivel = models.CharField(choices=const.NIVEL_DOCENTE, max_length=1)
-    data_progressao = models.DateField()
-    portaria = models.OneToOneField(Portaria, on_delete=models.CASCADE)
-    data_prox_progressao = models.DateField(null=True, blank=True)
-
-    class Meta:
-        verbose_name_plural = 'Progressão Docente'
-
-        unique_together = (("servidor", "tipo_progressao", "classe", "nivel"),)
-
-    def __str__(self):
-        return "{} {}, {}/{}".format(self.servidor, self.tipo_progressao, self.classe, self.nivel)
-
-
-@receiver(pre_save, sender=ProgressaoDocente)
-def callback_progressao_docente(sender, instance, *args, **kwargs):
-    instance.data_prox_progressao = (instance.data_progressao + relativedelta(years=+2))
-
-
-class ProgressaoTAE(models.Model):
-    servidor = models.ForeignKey(Servidor, on_delete=models.PROTECT)
-
+    tipo_progressao_docente = models.CharField(choices=const.TIPO_PROGRESSAO_DOCENTE, max_length=1, null=True, blank=True)
+    tipo_progressao_tae = models.CharField(choices=TIPO_PROGRESSAO_TAE, max_length=1,null=True, blank=True)
+    classe_docente = models.CharField(choices=const.CLASSE_DOCENTE, max_length=1, null=True, blank=True)
+    nivel_docente = models.CharField(choices=const.NIVEL_DOCENTE, max_length=1, null=True, blank=True)
     nivel_capacitacao = models.CharField(choices=const.NIVEL_TAE, max_length=1, null=True, blank=True)
-    padrao = models.CharField(choices=const.PADRAO_TAE, max_length=1, null=True, blank=True)
+    padrao_tae = models.CharField(choices=const.PADRAO_TAE, max_length=1, null=True, blank=True)
     data_progressao = models.DateField()
     portaria = models.OneToOneField(Portaria, on_delete=models.CASCADE)
     data_prox_progressao = models.DateField(null=True, blank=True)
 
-    MERITO = 'Mérito'
-    CAPACITACAO = 'Capacitação'
-    TIPO_PROGRESSAO_TAE = (
-        (MERITO, 'Progressão por Merito'),
-        (CAPACITACAO, 'Progressão por Capacitação'),
-    )
-    tipo_progressao = models.CharField(choices=TIPO_PROGRESSAO_TAE, max_length=12)
-
     class Meta:
-        verbose_name_plural = 'Progressão TAE'
+        verbose_name_plural = 'Progressões'
 
-        unique_together = (
-            ("servidor", "tipo_progressao", "nivel_capacitacao"), ("servidor", "tipo_progressao", "padrao"))
+        unique_together = (("servidor", "tipo_progressao_docente", "classe_docente", "nivel_docente"),
+                           ("servidor", "tipo_progressao_tae", "nivel_capacitacao"), ("servidor", "tipo_progressao_tae","padrao_tae"))
 
     def __str__(self):
-        return "{} {}, {}/{}".format(self.servidor, self.tipo_progressao, self.nivel_capacitacao, self.padrao)
+        return "{} {}, {}/{}".format(self.servidor, self.tipo_progressao_tae or self.tipo_progressao_docente)
 
 
-@receiver(pre_save, sender=ProgressaoTAE)
-def callback_progressao_tae(sender, instance, *args, **kwargs):
-    instance.data_prox_progressao = (instance.data_progressao + relativedelta(years=+1, months=+6))
+
+@receiver(pre_save, sender=Progressao)
+def callback_progressao(sender, instance, *args, **kwargs):
+    if Progressao.tipo_progressao_docente is not None:
+        instance.data_prox_progressao = (instance.data_progressao + relativedelta(years=+2))
+
+    elif Progressao.tipo_progressao_tae is not None:
+        instance.data_prox_progressao = (instance.data_progressao + relativedelta(years=+1, months=+6))
+

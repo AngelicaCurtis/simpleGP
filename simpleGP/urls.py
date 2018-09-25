@@ -23,6 +23,7 @@ from django.views.generic import TemplateView
 from home import urls as home_urls
 from progressoes import urls as progressoes_urls
 from servidores import urls as servidores_urls
+from aniversarios import urls as aniversarios_urls
 from servidores.views import home
 
 urlpatterns = [
@@ -31,6 +32,7 @@ urlpatterns = [
                   path('logout/', auth_views.LogoutView.as_view(), {'next_page': 'login'}, name='sair'),
                   path('home/', home),
                   path('', include(home_urls)),
+                  path('aniversarios/', include(aniversarios_urls)),
                   path('progressoes/', include(progressoes_urls)),
                   path('servidores/', include(servidores_urls)),
                   path('index/', TemplateView.as_view(template_name='index.html')),  # usando TemplateView

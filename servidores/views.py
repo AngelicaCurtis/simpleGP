@@ -1,15 +1,10 @@
-from typing import Any, Union
-
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
-from django.db.models import QuerySet
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from progressoes.models import Progressao
 from servidores.forms import ServidorForm
 from servidores.models import Servidor
 
@@ -44,9 +39,6 @@ def home(request):
 #         return object_list
 
 
-
-
-
 # list(Servidor.objects.all().order_by('nome'))
 
 class ServidorOrder(ListView):
@@ -63,7 +55,7 @@ class ServidorDetail(DetailView):
 class ServidorCreate(CreateView):
     model = Servidor
     fields = ['siape', 'nome', 'sobrenome', 'data_nasc', 'sexo', 'tipo_sanguineo', 'email', 'naturalidade',
-              'categoria','cargo', 'area', 'foto']
+              'categoria', 'cargo', 'area', 'campus', 'foto']
 
     success_url = '/servidores/lista-servidores'
 
@@ -71,7 +63,7 @@ class ServidorCreate(CreateView):
 class ServidorUpdate(UpdateView):
     model = Servidor
     fields = ['siape', 'nome', 'sobrenome', 'data_nasc', 'sexo', 'tipo_sanguineo', 'email', 'naturalidade',
-              'categoria','cargo', 'area', 'foto']
+              'categoria', 'cargo', 'area', 'foto']
 
     def get_success_url(self):  ## retorna apenas em caso de sucesso
         return reverse_lazy('lista-servidores')
@@ -92,16 +84,17 @@ def servidores_list(request):
 
     if termo_busca:
         lista_servidores = Servidor.objects.all()
-        lista_servidores = Servidor.objects.filter(nome__icontains=termo_busca) or Servidor.objects.filter(
-                sobrenome__icontains=termo_busca) or Servidor.objects.filter(categoria__id=termo_busca)
-
+        lista_servidores = Servidor.objects.filter(nome__icontains=termo_busca) \
+                           or Servidor.objects.filter(sobrenome__icontains=termo_busca) \
+                           or Servidor.objects.filter(categoria__nome__icontains=termo_busca) \
+                           or Servidor.objects.filter(cargo__nome__icontains=termo_busca) \
+                           or Servidor.objects.filter(area__nome__icontains=termo_busca)
     else:
         lista_servidores = Servidor.objects.order_by('nome')
     paginator = Paginator(lista_servidores, 5)
     page = request.GET.get('page')
     servidores = paginator.get_page(page)
     return render(request, 'servidores/servidor_list.html', {'servidores': servidores})
-
 
 
 def atualizar_servidor(request, id):
@@ -123,7 +116,19 @@ def deletar_servidor(request, id):
     return render(request, 'servidores/servidor_deletar.html', {'servidor': servidor})
 
 
-def selecao(request):
-    servidores = ServidorForm.objects.filter(categoria="Docente")
+class HistoricoProgressoes(DetailView):
+    model = Servidor
 
-    return render(request, 'servidores/docente.html', {servidores})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if self.object.categoria.id in "DOC":
+            context["tipo_progressao_a"] = "Progressões Docente"
+            context['progressoes_a'] = Progressao.objects.filter(servidor__id=self.object.id)
+        else:
+            context["tipo_progressao_a"] = "Progressões por Capacitação Profissional"
+            context['progressoes_a'] = Progressao.objects.filter(servidor__id=self.object.id, tipo_progressao_tae=1)
+            context["tipo_progressao_b"] = "Progressões por Mérito Profissional"
+            context['progressoes_b'] = Progressao.objects.filter(servidor__id=self.object.id, tipo_progressao_tae=2)
+
+        return context

@@ -50,8 +50,8 @@
         <div class="row bg-white has-shadow">
 
 
-            {% for progressaotae in object_list %}
-            {% if object.tipo_progressao == "Capacitação" %}
+            {% for progressao in object_list %}
+            {% if object.get_tipo_progressao_tae == "Progressão por Capacitação" %}
 
             <div class="col-lg-6">
                 <div class="card">
@@ -91,9 +91,9 @@
 
                                     <th scope="row">1</th>
 
-                                    <td>{{progressaotae.data_progressao}}</td>
-                                    <td>{{progressaotae.data_prox_progressao}}</td>
-                                    <td>{{progressaotae.portaria}}</td>
+                                    <td>{{progressao.data_progressao}}</td>
+                                    <td>{{progressao.data_prox_progressao}}</td>
+                                    <td>{{progressao.portaria}}</td>
                                     <td><a href="{% url 'visualizar' progressaotae.id %}">
                                         <i class="far fa-edit"></i>
                                     </a>
@@ -110,7 +110,7 @@
                 </div>
             </div>
 
-            {% elif object.tipo_progressao == "Mérito"}
+            {% elif object.tipo_progressao == "2"}
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-close">

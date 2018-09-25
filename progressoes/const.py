@@ -1,6 +1,4 @@
-
-
-TIPO_PROGRESSAO_DOC = (
+TIPO_PROGRESSAO_DOCENTE = (
     (u'1', u'Progressão por Desempenho Acadêmico'),
     (u'2', u'Promoção na Carreira'),
     (u'3', u'Aceleração de Promoção na Carreira'),
@@ -25,12 +23,12 @@ NIVEL_DOCENTE = (
 )
 
 
-# TIPO_PROGRESSAO_TAE = (
-#     (u'1', u'Progressão por Mérito'),
-#     (u'2', u'Promoção por Capacitação'),
-#
-#
-# )
+TIPO_PROGRESSAO_TAE = (
+    (u'1', u'Progressão por Mérito'),
+    (u'2', u'Progressão por Capacitação'),
+
+
+)
 
 NIVEL_TAE = (
     (u'1', u'I'),
@@ -57,5 +55,4 @@ PADRAO_TAE = (
     (u'15', u'15'),
     (u'16', u'16'),
 )
-
 

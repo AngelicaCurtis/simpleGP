@@ -1,6 +1,6 @@
 SEXO = (
-    (u'1', u'F'),
-    (u'2', u'M')
+    (u'1', u'Feminino'),
+    (u'2', u'Masculino')
 )
 
 TIPO_SANGUINEO = (

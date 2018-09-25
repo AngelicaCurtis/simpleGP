@@ -1,5 +1,7 @@
 {% extends 'cabecalho.html' %}
 {% load bootstrap %}
+{% load static %}
+
 
 {% block title %}Ficha Servidor{% endblock %}
 
@@ -10,106 +12,118 @@
     <div class="container-fluid">
         <div class="row bg-white has-shadow">
 
-    <!-- Form Elements -->
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-close">
-                <div class="dropdown">
-                    <button type="button" id="closeCard5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                            class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
-                    <div aria-labelledby="closeCard5" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#"
-                                                                                                              class="dropdown-item remove">
-                        <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i
-                            class="fa fa-gear"></i>Edit</a></div>
+            <!-- Form Elements -->
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-close">
+                        <div class="dropdown">
+                            <button type="button" id="closeCard5" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false"
+                                    class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                            <div aria-labelledby="closeCard5" class="dropdown-menu dropdown-menu-right has-shadow"><a
+                                    href="#"
+                                    class="dropdown-item remove">
+                                <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i
+                                    class="fa fa-gear"></i>Edit</a></div>
+                        </div>
+                    </div>
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">Ficha Servidor</h3>
+                    </div>
+                    <div class="card-body">
+                        <form class="form-horizontal">
+
+                            <div class="row">
+                                <div class="col col-xs-12 col-sm-5 col-md-4 col-lg-3 col-sm-order-last">
+                                    <div class="card">
+                                        <div class="card-body text-sm-right">
+                                        {% if object.foto.url != None %}
+                                        <div class="client-avatar"><img src="{{object.foto.url}}" alt="..."
+                                                                        class="img-fluid rounded-circle img-thumbnail"
+                                                                        style="
+                                                                    height:200px;
+                                                                    width:auto;
+                                                                    border-radius: 10px 70px !important;">
+                                        </div>
+                                        {% endif %}
+                                            <hr>
+                                        <div class="client-title">
+                                            <h3> {{object.nome}} {{object.sobrenome}}</h3>
+                                            <p>{{object.categoria}}</p>
+                                            {% if object.cargo == None %}
+                                            <span>Área: {{object.area}} </span>
+                                            {% else %}
+                                            <span>{{object.cargo}} </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="col col-xs-12 col-sm-7 col-md-8 col-lg-9  order-sm-first">
+                                    <div class="form-group">
+                                        <label class="form-control-label">SIAPE</label>
+                                        <p>
+                                            {{object.siape}}
+                                        </p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class=" form-control-label">Nome</label>
+                                        <p>
+                                            {{object.nome}} {{object.sobrenome}}
+                                        </p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class=" form-control-label">Data Nascimento</label>
+                                        <p>
+                                            {{object.data_nasc}}
+                                        </p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class=" form-control-label">Sexo</label>
+                                        <p>
+                                            {{object.get_sexo_display}}
+                                        </p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class=" form-control-label">Tipo Sanguineo</label>
+                                        <p>
+                                            {{object.get_tipo_sanguineo_display}}
+                                        </p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class=" form-control-label">E-mail</label>
+                                        <p>
+                                            {{object.email}}
+                                        </p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class=" form-control-label">Naturalidade</label>
+                                        <p>
+                                            {{object.naturalidade}}
+                                        </p>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div>
+                                            <a href="{% url 'lista-servidores' %}" class="btn btn-secondary">Voltar</a>
+
+                                            <a class="btn btn-primary" href="{% url 'servidor-update' servidor.id %}">
+                                                <i class="far fa-edit"></i>Editar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="card-header d-flex align-items-center">
-                <h3 class="h4">Ficha Servidor</h3>
-            </div>
-            <div class="card-body">
-                <form class="form-horizontal">
-
-
-                    <div class="card-body text-right">
-                        <div class="client-avatar"><img src="{{object.foto}}" alt="..." class="img-fluid rounded-circle">
-                            <div class="status bg-green"></div>
-                        </div>
-                        <div class="client-title">
-                            <h3> {{object.nome}} {{object.sobrenome}}</h3>
-                            <p>{{object.categoria}}</p>
-                            {% if object.cargo == None %}
-                                <span>Área: {{object.area}} </span>
-                            {% else %}
-                                <span>{{object.cargo}} </span>
-                            {% endif %}
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">SIAPE</label>
-                        <div class="col-sm-3">
-                            {{object.siape}}
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">Nome</label>
-                        <div class="col-sm-9">
-                            {{object.nome}} {{object.sobrenome}}
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">Data Nascimento</label>
-                        <div class="col-sm-9">
-                            {{object.data_nasc}}
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">Sexo</label>
-                        <div class="col-sm-9">
-                            {{object.sexo}}
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">Tipo Sanguineo</label>
-                        <div class="col-sm-9">
-                            {{object.tipo_sanguineo}}
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">E-mail</label>
-                        <div class="col-sm-9">
-                            {{object.email}}
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">Naturalidade</label>
-                        <div class="col-sm-9">
-                            {{object.naturalidade}}
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row">
-                        <div class="col-sm-9">
-
-                            <a href="{% url 'lista-servidores' %}" class="btn btn-secondary">Voltar</a>
-
-                            <a class="btn btn-primary" href="{% url 'servidor-update' servidor.siape %}">
-                                <i class="far fa-edit"></i>Editar</a>
-                        </div>
-
-
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
         </div>
     </div>
 </section>

@@ -1,0 +1,102 @@
+{% extends 'cabecalho.html' %}
+{% load bootstrap %}
+
+
+{% block title %}Cadastro Nova Progressão{% endblock %}
+
+{% block main %}
+
+<!-- Form Elements -->
+<section class="dashboard-counts no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row bg-white has-shadow">
+
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-close">
+                        <div class="dropdown">
+                            <button type="button" id="closeCard5" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i>
+                            </button>
+                            <div aria-labelledby="closeCard5" class="dropdown-menu dropdown-menu-right has-shadow"><a
+                                    href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a
+                                    href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                        </div>
+                    </div>
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">Cadastro de Progressão - {{ servidor_data.nome }} - {{ servidor_data.categoria }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <form class="form" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="servidor" class="form-control disabled"
+                                   value="{{ servidor_data.id }}">
+
+                            <div class="line"></div>
+                            {% if servidor_data != None %}
+
+                            {% if servidor_data.categoria.id == 'DOC' %}
+
+                            <div class="form-group">
+                                <label class="form-control-label">Selecione o Tipo de Progressão</label>
+                                {{form.tipo_progressao_docente | bootstrap}}
+                            </div>
+                            <div class="line"></div>
+                            <div class="form-group">
+                                <label class="form-control-label">Nível</label>
+                                {{form.nivel_docente | bootstrap}}
+                            </div>
+                            <div class="line"></div>
+                            <div class="form-group">
+                                <label class="form-control-label">Classe</label>
+                                {{form.classe_docente | bootstrap}}
+                            </div>
+
+                            {% elif servidor_data.categoria.id == 'TAE' %}
+
+                            <div class="form-group">
+                                <label class="form-control-label">Selecione o Tipo de Progressão</label>
+                                {{form.tipo_progressao_tae | bootstrap}}
+                            </div>
+                            <div class="line"></div>
+                            <div class="form-group">
+                                <label class="form-control-label">Padrão</label>
+                                {{form.padrao_tae | bootstrap}}
+                            </div>
+                            <div class="line"></div>
+                            <div class="form-group">
+                                <label class="form-control-label">Nível</label>
+                                {{form.nivel_capacitacao | bootstrap}}
+                            </div>
+
+                            {% else %}
+                            <span class="alert alert-danger">Categoria do servidor não permite cadastro de progressões!</span>
+
+                            {% endif %}
+
+                            <div class="form-group">
+                                <label class="form-control-label">Data Progressão</label>
+                                {{form.data_progressao | bootstrap}}
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-control-label">Portaria</label>
+                                {{form.portaria | bootstrap}}
+                            </div>
+
+                            {% endif %}
+
+
+                            <a href="{% url 'lista' %}" class="btn btn-secondary">Cancelar</a>
+
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

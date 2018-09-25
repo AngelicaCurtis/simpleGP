@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load admin_urls %}
 {% load static %}
 {% load nav_active %}
 <html>
@@ -21,7 +22,7 @@
     <!-- Google fonts - Poppins -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="{% static 'css/default.css' %}" id="theme-stylesheet">
+    <link rel="stylesheet" href="{% static 'css/sea.css' %}" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
     <!-- Favicon-->
@@ -46,7 +47,7 @@
                 <div class="navbar-holder d-flex align-items-center justify-content-between">
                     <!-- Navbar Header-->
                     <div class="navbar-header">
-                        <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
+                        <!-- Navbar Brand --><a href="{% url 'index' %}" class="navbar-brand d-none d-sm-inline-block">
                         <div class="brand-text d-none d-lg-inline-block"><span>Simple </span><strong>GP</strong></div>
                         <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>SGP</strong></div>
                     </a>
@@ -179,33 +180,17 @@
                         <li><a href="#">Relatórios</a></li>
                     </ul>
                 </li>
-                <li><a href="#progressoes" aria-expanded="false" data-toggle="collapse">
-                    <i class="icon-interface-windows"></i>Progressões</a>
+                <li><a href="#progressoes" aria-expanded="false" data-toggle="collapse"> <i
+                        class="icon-interface-windows"></i>Progressões</a>
                     <ul id="progressoes"
-                        class="collapse list-unstyled {% nav_active request 'lista-tae|cadastro-progressao-tae|lista-docente|cadastro-progressao-docente' 'show' %}">
-                        <li><a href="#docente" aria-expanded="false" data-toggle="collapse">
-                            <i class="icon-interface-windows"></i>Docente</a>
-                            <ul id="docente"
-                                class="collapse list-unstyled {% nav_active request 'lista-docente|cadastro-progressao-docente' 'show' %}">
-                                <li class="{% nav_active request 'lista-docente' %}"><a href="{%url 'lista-tae'%}">Cadastar</a>
-                                </li>
-                                <li class="{% nav_active request 'cadastro-progressao-docente' %}"><a
-                                        href="{%url 'cadastro-progressao-tae'%}">Listar</a></li>
-                            </ul>
+                        class="collapse list-unstyled {% nav_active request 'lista|cadastro-progressao' 'show' %}">
+                        <li class="{% nav_active request 'lista' %}"><a href="{%url 'lista'%}">Listar</a>
                         </li>
-                        <li><a href="#tae" aria-expanded="false" data-toggle="collapse">
-                            <i class="icon-interface-windows"></i>TAE</a>
-                            <ul id="tae"
-                                class="collapse list-unstyled {% nav_active request 'lista-tae|cadastro-progressao-tae' 'show' %}">
-                                <li class="{% nav_active request 'cadastro-progressao-tae' %}"><a
-                                        href="{%url 'cadastro-progressao-tae'%}">Cadastar</a></li>
-                                <li class="{% nav_active request 'lista-tae' %}"><a
-                                        href="{%url 'lista-tae'%}">Listar</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Todas</a></li>
+                        <li class="{% nav_active request 'cadastro-progressao' %}"><a
+                                href="{%url 'cadastro-progressao'%}">Cadastrar</a></li>
                     </ul>
                 </li>
+
 
                 <li><a href="tables.html"> <i class="icon-grid"></i>Editais</a></li>
                 <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Estágio Probatório </a></li>
@@ -217,7 +202,7 @@
             <ul class="list-unstyled">
                 <li><a href="tables.html"> <i class="icon-grid"></i>Funções Gratificadas</a></li>
                 <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Formação</a></li>
-                <li><a href="forms.html"> <i class="icon-padnote"></i>...</a></li>
+                <li><a href="{% url 'admin:index' %}"> <i class="icon-padnote"></i>...</a></li>
             </ul>
         </nav>
         <div class="content-inner">
@@ -265,6 +250,11 @@
 <script src="{% static 'js/charts-home.js' %}"></script>
 <!-- Main File-->
 <script src="{% static 'js/front.js'%}"></script>
+
+{% block javascript %}
+{% endblock %}
+
+
 </body>
 
 </html>

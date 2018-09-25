@@ -29,21 +29,41 @@
                         </div>
                     </div>
 
+                    <!--<div class="dataTables_filter float-right">-->
+                        <!--<form action="">-->
+                            <!--<div class="input-group mb-3">-->
+                                <!--<div class="input-group-prepend">-->
+                            <!--<span class="input-group-text" id="inputGroup-sizing-default">-->
+                                <!--<i class="fas fa-search"></i>-->
+                            <!--</span>-->
+                                <!--</div>-->
+                                <!--<input type="text" name="busca" class="form-control" placeholder="Pesquisar"-->
+                                       <!--aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">-->
+                            <!--</div>-->
+                        <!--</form>-->
+                    <!--</div>-->
+
                     <div class="dataTables_filter float-right">
+
                         <form action="">
-
-
                             <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroup-sizing-default">
-                                <i class="fas fa-search"></i>
-                            </span>
-                                </div>
-                                <input type="text" name="busca" class="form-control" placeholder="Pesquisar"
-                                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" name="busca" class="form-control" placeholder="Pesquisar" aria-label="Sizing example input"
+                              aria-label="Text input with dropdown button">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-search"></i></button>
+                            <div class="dropdown-menu" name="categoria">
+                                <a class="dropdown-item" href="docente">Docente</a>
+                                <a class="dropdown-item" href="#">TAE</a>
+                                <a class="dropdown-item" href="#">Professor Substituto</a>
+                                <div role="separator" class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Separated link</a>
                             </div>
-                        </form>
+                        </div>
+
                     </div>
+                            </form>
+                        </div>
+
                     <div class="card-header d-flex align-items-center">
                         <h3 class="h4">Servidores</h3>
                     </div>
@@ -55,9 +75,12 @@
                                     <th>SIAPE</th>
                                     <th>Nome</th>
                                     <th>Categoria</th>
-                                    <th>Visualizar</th>
-                                    <th>Editar</th>
-                                    <th>Deletar</th>
+                                    <th>Área/Cargo</th>
+                                    <th>Campus</th>
+                                    <th></th>
+                                    <th></th>
+                                    <td></td>
+
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -70,7 +93,12 @@
 
                                     <td>{{servidor.categoria}}</td>
 
-
+                                    {% if servidor.cargo is None %}
+                                    <td>{{servidor.area}}</td>
+                                    {% else %}
+                                    <td>{{servidor.cargo}}</td>
+                                    {% endif %}
+                                    <td>{{servidor.campus}}</td>
                                     <td><a href="{% url 'servidor-detalhes' servidor.id %}">
                                         <i class="far fa-eye"></i>
                                     </a>
@@ -81,22 +109,20 @@
                                     </a>
                                     </td>
 
-                                    <td><a href="{% url 'delete' servidor.siape %}" class="trash-item">
+                                    <td><a href="#" onclick="removerServidor('{{ servidor.nome|add:' '|add:servidor.sobrenome }}', '{% url 'delete' servidor.id %}')" class="trash-item">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                     </td>
 
                                 </tr>
 
-
                                 {% empty%}
                                 <tr>
-                                    <td colspan="6">Desculpe, ainda não há servidores cadastrados!</td>
+                                    <td colspan="6">Desculpe, não encontramos sua busca!</td>
                                 </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
-
 
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-center">
@@ -136,6 +162,38 @@
             </div>
         </div>
     </div>
+
+    <!--Modal Deletar Servidor-->
+    <div id="modal-deletar" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Atenção!</h5>
+                </div>
+                <div class="modal-body">
+                    Deseja remover <span id="modal-remover-nome"></span>?
+                </div>
+                <div class="modal-footer">
+                    <form method="POST" id="modal-deletar-form">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-danger" type="submit">Confirmar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 {% endblock %}
 
+{% block javascript %}
+<script>
+    function removerServidor(nome, url) {
+        let modal = $("#modal-deletar");
+        $("#modal-remover-nome").text(nome);
+        $("#modal-deletar-form").attr('action', url);
+        modal.modal();
+    }
+</script>
+{% endblock %}

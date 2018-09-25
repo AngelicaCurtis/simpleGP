@@ -1,21 +1,14 @@
-from django.db import models
 from django.core.mail import send_mail
+from django.db import models
 from django.template.loader import render_to_string
 
+from campi.models import Campus
 from servidores import const
 
 
 class Categoria(models.Model):
-    CATEGORIAS = (
-        ('1', 'Docente'),
-        ('2', 'TAE'),
-        ('3', 'Professor Substituto'),
-        ('4', 'TAE Exercício Provisório'),
-        ('5', 'Docente Exercício Provisório')
-
-    )
-    nome = models.CharField(choices=CATEGORIAS, max_length=30, unique=True)
-    descricao = models.TextField(null=True, blank=True)
+    id = models.CharField(primary_key=True, max_length=8)
+    nome = models.CharField(max_length=30, unique=True)
 
     def __str__(self):
         return self.nome
@@ -52,13 +45,14 @@ class Servidor(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
     cargo = models.ForeignKey(Cargo, on_delete=models.PROTECT, null=True, blank=True)
     area = models.ForeignKey(Area, on_delete=models.PROTECT, null=True, blank=True)
+    data_exercicio = models.DateField()
+    campus = models.ForeignKey(Campus, on_delete=models.PROTECT)
 
     class Meta:
         verbose_name_plural = 'Servidores'
 
         unique_together = (
             ("siape", "nome", "cargo"), ("siape", "nome", "area"))
-
 
     def save(self, *args, **kwargs):
         super(Servidor, self).save(*args, **kwargs)

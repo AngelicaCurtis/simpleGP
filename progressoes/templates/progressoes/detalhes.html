@@ -20,24 +20,50 @@
             </div>
         </div>
         <div class="card-header d-flex align-items-center">
-            <h3 class="h4">Histórico de Progressões</h3>
+            <h3 class="h4">Progressão detalhada</h3>
         </div>
         <div class="card-body">
             <form class="form-horizontal">
 
 
                 <div class="card-body text-right">
-                    <div class="client-avatar"><img src="{{object.foto}}" alt="..." class="img-fluid rounded-circle">
-                        <div class="status bg-green"></div>
+                    {% if object.foto.url != None %}
+                    <div class="client-avatar"><img src="{{object.foto.url}}" alt="..."
+                                                    class="img-fluid rounded-circle img-thumbnail"
+                                                    style="
+                                                                    height:200px;
+                                                                    width:auto;
+                                                                    border-radius: 10px 70px !important;">
                     </div>
-                    <div class="client-title">
-                        <h3> {{object.servidor}}</h3>
-                    </div>
-                </div>
+                    {% endif %}
+
+
+
+                        <div class="client-title">
+                            <h3> {{object.servidor}}</h3>
+                            <p>{{object.categoria}}</p>
+                            {% if object.servidor.cargo == None %}
+                            <span>Área: {{object.servidor.area}} </span>
+                            {% else %}
+                            <span>{{object.servidor.cargo}} </span>
+                            {% endif %}
+                        </div>
+
+                        </div>
 
 
                 <div class="form-group row">
                     <label class="col-sm-3 form-control-label">Progressão</label>
+
+                    {% if progressoes.tipo_progressao_docente == None %}
+                    <div class="col-sm-3">
+                        {{object.get_tipo_progressao_tae_display}}
+                    </div>
+                    {% else %}
+                    <div>{{progressoes.get_tipo_progressao_docente_display}}</div>
+                    {% endif %}
+
+
                     <div class="col-sm-3">
                         {{object.tipo_progressao}}
                     </div>
@@ -49,25 +75,32 @@
                         {{object.data_progressao}}
                     </div>
                 </div>
-                {% if object.tipo_progressao == "Capacitação" %}
+                {% if object.nivel_capacitacao == None %}
 
                 <div class="form-group row">
-                    <label class="col-sm-3 form-control-label">Nível</label>
+                    <label class="col-sm-3 form-control-label">Padrão de Vencimento</label>
                     <div class="col-sm-9">
-                        {{object.nivel_capacitacao}}
+                        {{object.get_padrao_vencimento_display}}
                     </div>
                 </div>
 
                 {% else %}
                 <div class="form-group row">
-                    <label class="col-sm-3 form-control-label">Padrão de Vencimento</label>
+                    <label class="col-sm-3 form-control-label">Nível de Capacitação</label>
                     <div class="col-sm-9">
-                        {{object.padrao}}
+                        {{object.get_nivel_capacitacao_display}}
                     </div>
                 </div>
 
                 {% endif%}
 
+
+                <div class="form-group row">
+                    <label class="col-sm-3 form-control-label">Portaria de Concessão</label>
+                    <div class="col-sm-9">
+                        {{object.portaria}}
+                    </div>
+                </div>
 
                 <div class="form-group row">
                     <label class="col-sm-3 form-control-label">Data Proxíma Progressão</label>
@@ -81,9 +114,9 @@
                     <label class="col-sm-3 form-control-label">Editar</label>
                     <div class="col-sm-9">
 
-                        <a href="{% url 'lista-tae' %}" class="btn btn-secondary">Voltar</a>
+                        <a href="{% url 'lista' %}" class="btn btn-secondary">Voltar</a>
 
-                        <a class="btn btn-primary" href="{% url 'atualizar' progressaotae.id %}">
+                        <a class="btn btn-primary" href="{% url 'atualizar' progressao.id %}">
                             <i class="far fa-edit"></i>Editar
                         </a>
                     </div>
