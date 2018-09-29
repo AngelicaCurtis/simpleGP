@@ -14,4 +14,4 @@ class Portaria(models.Model):
         unique_together = (("numero", "ano", "origem"),)
 
     def __str__(self):
-        return "{}/ {}/{} - {}".format(self.numero, self.ano, self.origem)
+        return "{}/ {}/{}".format(self.numero, self.ano, self.origem)

@@ -34,7 +34,7 @@ class Area(models.Model):
 # TODO melhorar modelagem
 class Servidor(models.Model):
     siape = models.CharField("SIAPE", max_length=7, unique=True)
-    nome = models.CharField(max_length=50)
+    nome = models.CharField(max_length=50, help_text="Obrigatório")
     sobrenome = models.CharField(max_length=200)
     data_nasc = models.DateField("Data de Nascimento")
     sexo = models.CharField(choices=const.SEXO, max_length=1)
@@ -45,7 +45,7 @@ class Servidor(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
     cargo = models.ForeignKey(Cargo, on_delete=models.PROTECT, null=True, blank=True)
     area = models.ForeignKey(Area, on_delete=models.PROTECT, null=True, blank=True)
-    data_exercicio = models.DateField()
+    data_exercicio = models.DateField("Data de Exercício")
     campus = models.ForeignKey(Campus, on_delete=models.PROTECT)
 
     class Meta:
@@ -54,19 +54,23 @@ class Servidor(models.Model):
         unique_together = (
             ("siape", "nome", "cargo"), ("siape", "nome", "area"))
 
-    def save(self, *args, **kwargs):
-        super(Servidor, self).save(*args, **kwargs)
-        data = {'servidor': self.nome}
-        plain_text = render_to_string('servidores/emails/novo_cadastro.txt', data)
-        html_email = render_to_string('servidores/emails/novo_cadastro.html', data)
-        send_mail(
-            'Novo Cadastro Simple GP',
-            plain_text,
-            'angelicacurtis.f@gmail.com',
-            ['angelicacurtis.f@gmail.com'],
-            html_message=html_email,
-            fail_silently=False,
-        )
+    # def save(self, *args, **kwargs):
+    #     super(Servidor, self).save(*args, **kwargs)
+    #     data = {'servidor': self.nome}
+    #     plain_text = render_to_string('servidores/emails/novo_cadastro.txt', data)
+    #     html_email = render_to_string('servidores/emails/novo_cadastro.html', data)
+    #     send_mail(
+    #         'Novo Cadastro Simple GP',
+    #         plain_text,
+    #         'angelicacurtis.f@gmail.com',
+    #         ['angelicacurtis.f@gmail.com'],
+    #         html_message=html_email,
+    #         fail_silently=False,
+    #     )
 
     def __str__(self):
         return "{} {}".format(self.nome, self.sobrenome)
+
+
+
+

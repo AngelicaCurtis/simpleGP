@@ -49,9 +49,37 @@
                         {% else %}
                         <span>{{object.cargo}} </span>
                         {% endif %}
-                        <span>{{object.context.data_prox_progressao}} </span>
+
 
                     </div>
+                </div>
+
+                <div class="card-body text-left">
+                    <h3>Conforme <a href="http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12772.htm" target="_blank">Lei nº. 12.772/2012</a></h3>
+
+                    <p class="blockquote">
+                        {% if object.categoria.id == 'TAE' %}
+
+                        {% elif object.categoria.id  == 'DOC' %}
+                        <p>Art. 12.  O desenvolvimento na Carreira de Magistério Superior ocorrerá mediante <b>progressão funcional e promoção</b>.
+                        <p>§ 1o  Para os fins do disposto no caput, progressão é a passagem do servidor para o nível de vencimento imediatamente superior dentro de uma mesma classe, e promoção, a passagem do servidor de uma classe para outra subsequente, na forma desta Lei.
+                        </p>
+                        <p>§ 2o  A progressão na Carreira de Magistério Superior ocorrerá com base nos critérios gerais estabelecidos nesta Lei e observará, cumulativamente:
+                        </p>I - o cumprimento do interstício de 24 (vinte e quatro) meses de efetivo exercício em cada nível; e</p>
+                        <p>II - aprovação em avaliação de desempenho.</p>
+                        § 3o  A promoção ocorrerá observados o interstício mínimo de 24 (vinte e quatro) meses no último nível de cada Classe antecedente àquela para a qual se dará a promoção e, ainda, as seguintes condições:</p>
+                        <p>Art. 13.  Os docentes aprovados no estágio probatório do respectivo cargo que atenderem os seguintes requisitos de titulação farão jus a processo de aceleração da promoção:
+                        <p>(Redação dada pela <a href="">Lei nº 12.863</a>, de 2013)</p>
+                        <p>(...)</p>
+
+                        <p>Parágrafo único.  Aos servidores ocupantes de cargos da Carreira de Magistério Superior em 1o de março de 2013 ou na data de publicação desta Lei, se posterior, é permitida a aceleração da promoção de que trata este artigo ainda que se encontrem em estágio probatório no cargo.
+                        </p>
+                        <p>Art. 13-A.  O efeito financeiro da progressão e da promoção a que se refere o caput do art. 12 ocorrerá a partir da data em que o docente cumprir o interstício e os requisitos estabelecidos em lei para o desenvolvimento na carreira.       (Incluído pela Lei nº 13.325, de 2016)</p>
+                        </p>
+
+                        {% endif %}
+
+                    </blockquote>
 
                 </div>
 
@@ -73,9 +101,9 @@
                             <thead>
                             <tr>
                                 {% if object.categoria.id  == 'DOC' %}
-                                    <th>Classe/Nível</th>
+                                <th>Classe/Nível</th>
                                 {% else %}
-                                    <th>Nível Capacitação</th>
+                                <th>Nível Capacitação</th>
                                 {% endif %}
                                 <th>Data</th>
                                 <th>Portaria</th>
@@ -85,15 +113,17 @@
                             <tbody>
                             {% for prog_a in progressoes_a %}
                             <tr>
-                               {% if object.categoria.id  == 'DOC' %}
-                                <td>Classe {{prog_a.classe_docente}} / Nível {{prog_a.nivel_docente}}</td>
+                                {% if object.categoria.id  == 'DOC' %}
+                                <td>Classe D{{prog_a.classe_docente}} / Nível {{prog_a.nivel_docente}}</td>
                                 {% else %}
                                 <td>{{ prog_a.nivel_capacitacao }}</td>
                                 {% endif %}
                                 <td>{{ prog_a.data_progressao }}</td>
-                                <td>{{ prog_a.portaria}}</td>
+                                <td><a href="{{prog_a.portaria__portaria.url}}" target="_blank">{{prog_a.portaria}}</a></td>
                                 <td>{{ prog_a.data_prox_progressao}}</td>
                             </tr>
+                            {%empty%}
+                            <tr >Ainda não há registros!</tr>
                             {% endfor %}
                             </tbody>
                         </table>
@@ -103,7 +133,7 @@
 
             {% if object.categoria.id == 'TAE' %}
 
-               <div class="card col-xs-12 col-sm-12">
+            <div class="card col-xs-12 col-sm-12">
                 <div class="card-body">
                     <h3 class="card-title">{{ tipo_progressao_b}}</h3>
                     <div class="table-responsive">
@@ -111,21 +141,22 @@
                             <thead>
                             <tr>
                                 <th>Padrão de Vencimento</th>
-                                <!--if-->
                                 <th>Data</th>
                                 <th>Portaria</th>
                                 <th>Data Próxima Progressão</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for prog_b in progressoes_a %}
+                            {% for prog_b in progressoes_b %}
                             <tr>
                                 <td>{{ prog_b.padrao_tae }}</td>
                                 <!--if-->
                                 <td>{{ prog_b.data_progressao }}</td>
-                                <td>{{ prog_b.portaria}}</td>
+                                <td><a href="({prog_b.portaria__portaria.url}}" target="_blank">{{prog_b.portaria}}</a></td>
                                 <td>{{ prog_b.data_prox_progressao}}</td>
                             </tr>
+                            {%empty%}
+                            <tr><p class="alert alert-warning">Ainda não há registros!</p></tr>
                             {% endfor %}
                             </tbody>
                         </table>

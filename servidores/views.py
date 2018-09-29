@@ -1,9 +1,12 @@
+from datetime import date, timedelta
+
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from portarias.models import Portaria
 from progressoes.models import Progressao
 from servidores.forms import ServidorForm
 from servidores.models import Servidor
@@ -55,7 +58,7 @@ class ServidorDetail(DetailView):
 class ServidorCreate(CreateView):
     model = Servidor
     fields = ['siape', 'nome', 'sobrenome', 'data_nasc', 'sexo', 'tipo_sanguineo', 'email', 'naturalidade',
-              'categoria', 'cargo', 'area', 'campus', 'foto']
+              'categoria', 'cargo', 'area', 'data_exercicio', 'campus', 'foto']
 
     success_url = '/servidores/lista-servidores'
 
@@ -63,7 +66,7 @@ class ServidorCreate(CreateView):
 class ServidorUpdate(UpdateView):
     model = Servidor
     fields = ['siape', 'nome', 'sobrenome', 'data_nasc', 'sexo', 'tipo_sanguineo', 'email', 'naturalidade',
-              'categoria', 'cargo', 'area', 'foto']
+              'categoria', 'cargo', 'area', 'data_exercicio', 'campus', 'foto']
 
     def get_success_url(self):  ## retorna apenas em caso de sucesso
         return reverse_lazy('lista-servidores')
@@ -122,13 +125,17 @@ class HistoricoProgressoes(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        if self.object.categoria.id in "DOC":
+        if self.object.categoria.id in 'DOC':
             context["tipo_progressao_a"] = "Progressões Docente"
             context['progressoes_a'] = Progressao.objects.filter(servidor__id=self.object.id)
-        else:
+
+
+
+        elif self.object.categoria.id in 'TAE':
             context["tipo_progressao_a"] = "Progressões por Capacitação Profissional"
-            context['progressoes_a'] = Progressao.objects.filter(servidor__id=self.object.id, tipo_progressao_tae=1)
+            context['progressoes_a'] = Progressao.objects.filter(servidor__id=self.object.id).filter(tipo_progressao_tae=2)\
+                .order_by('nivel_capacitacao')
             context["tipo_progressao_b"] = "Progressões por Mérito Profissional"
-            context['progressoes_b'] = Progressao.objects.filter(servidor__id=self.object.id, tipo_progressao_tae=2)
+            context['progressoes_b'] = Progressao.objects.filter(servidor__id=self.object.id).filter(tipo_progressao_tae=1)
 
         return context
