@@ -85,17 +85,10 @@ WSGI_APPLICATION = 'simpleGP.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-# default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'simple-gp',
-        'USER': 'postgres',
-        'PASSWORD': 'sitrucatina',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
+    'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
 }
 
 # Password validation

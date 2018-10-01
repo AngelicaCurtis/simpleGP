@@ -97,7 +97,7 @@
                                         <i class="far fa-eye"></i>
                                     </a>
                                     </td>
-                                    <td><a href="{% url 'deletar' progressao.id %}" class="trash-item">
+                                    <td><a href="#" onclick="removerProgressao('{{ progressao.servidor }}', '{% url 'deletar' progressao.id %}')" class="trash-item">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                     </td>
@@ -150,8 +150,41 @@
             </div>
         </div>
     </div>
+
+     <!--Modal Deletar Progressão-->
+    <div id="modal-deletar" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Atenção!</h5>
+                </div>
+                <div class="modal-body">
+                    Deseja remover o registro de progresão do servidor(a) <span id="modal-remover-nome"></span>?
+                </div>
+                <div class="modal-footer">
+                    <form method="POST" id="modal-deletar-form">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-danger" type="submit">Confirmar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </section>
 
 
 {% endblock %}
-
+{% block javascript %}
+<script>
+    function removerProgressao(nome, url) {
+        let modal = $("#modal-deletar");
+        $("#modal-remover-nome").text(nome);
+        $("#modal-deletar-form").attr('action', url);
+        modal.modal();
+    }
+</script>
+{% endblock %}
