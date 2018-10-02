@@ -1,6 +1,7 @@
 from django.urls import path
 
-from progressoes.views import Cadastro, ProgressaoList, Atualizar, Deletar, ProgressaoDetalhes, SelecaoServidor
+from progressoes.views import Cadastro, ProgressaoList, Atualizar, Deletar, ProgressaoDetalhes, SelecaoServidor, \
+    Historico
 
 urlpatterns = [
     path('cadastro/', Cadastro.as_view(template_name="progressoes/cadastro-progressao.html"),
@@ -10,6 +11,7 @@ urlpatterns = [
     path('selecao/', SelecaoServidor.as_view(), name="selecao"),
     path('atualizar/<pk>', Atualizar.as_view(template_name="progressoes/atualizar.html"), name="atualizar"),
     path('visualizar/<pk>', ProgressaoDetalhes.as_view(template_name="progressoes/detalhes.html"), name="visualizar"),
+    path('historico/<pk>', Historico.as_view(template_name="progressoes/historico.html"), name="historico"),
     path('deletar/<pk>', Deletar.as_view(template_name="progressoes/delete.html"), name="deletar"),
 
 ]

@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="card-header d-flex align-items-center">
-                        <h3 class="h4">Cadastro de Progressão - {{ servidor_data.nome }} - {{ servidor_data.categoria }}</h3>
+                        <h3 class="h4">Cadastro de Progressão - {{ servidor_data.categoria }}</h3>
                     </div>
                     <div class="card-body">
                         <form class="form" method="POST" enctype="multipart/form-data">
@@ -32,40 +32,43 @@
                             <input type="hidden" name="servidor" class="form-control disabled"
                                    value="{{ servidor_data.id }}">
 
-                            <div class="line"></div>
+                             <div class="form-group">
+                             <b>Servidor(a) {{servidor_data.nome}} {{servidor_data.sobrenome}}</b>
+                            </div>
+
                             {% if servidor_data != None %}
 
                             {% if servidor_data.categoria.id == 'DOC' %}
 
                             <div class="form-group">
-                                <label class="form-control-label">Selecione o Tipo de Progressão</label>
+                                <!--<label class="form-control-label">Selecione o Tipo de Progressão</label>-->
                                 {{form.tipo_progressao_docente | bootstrap}}
                             </div>
                             <div class="line"></div>
                             <div class="form-group">
-                                <label class="form-control-label">Nível</label>
+                                <!--<label class="form-control-label">Nível</label>-->
                                 {{form.nivel_docente | bootstrap}}
                             </div>
                             <div class="line"></div>
                             <div class="form-group">
-                                <label class="form-control-label">Classe</label>
+                                <!--<label class="form-control-label">Classe</label>-->
                                 {{form.classe_docente | bootstrap}}
                             </div>
 
                             {% elif servidor_data.categoria.id == 'TAE' %}
 
                             <div class="form-group">
-                                <label class="form-control-label">Selecione o Tipo de Progressão</label>
+                                <!--<label class="form-control-label">Selecione o Tipo de Progressão</label>-->
                                 {{form.tipo_progressao_tae | bootstrap}}
                             </div>
                             <div class="line"></div>
                             <div class="form-group">
-                                <label class="form-control-label">Padrão</label>
+                                <!--<label class="form-control-label">Padrão</label>-->
                                 {{form.padrao_tae | bootstrap}}
                             </div>
                             <div class="line"></div>
                             <div class="form-group">
-                                <label class="form-control-label">Nível</label>
+                                <!--<label class="form-control-label">Nível</label>-->
                                 {{form.nivel_capacitacao | bootstrap}}
                             </div>
 
@@ -75,12 +78,12 @@
                             {% endif %}
 
                             <div class="form-group">
-                                <label class="form-control-label">Data Progressão</label>
+                                <!--<label class="form-control-label">Data Progressão</label>-->
                                 {{form.data_progressao | bootstrap}}
                             </div>
 
                             <div class="form-group">
-                                <label class="form-control-label">Portaria</label>
+                                <!--<label class="form-control-label">Portaria</label>-->
                                 {{form.portaria | bootstrap}}
                             </div>
 

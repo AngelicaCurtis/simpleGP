@@ -44,11 +44,11 @@
                     <div class="client-title">
                         <h3> {{object.nome}} {{object.sobrenome}}</h3>
                         <p>{{object.categoria}}</p>
-                        <p>Nível: {{object.cargo.nivel}}</p>
                         {% if object.cargo == None %}
                         <span>Área: {{object.area}} </span>
                         {% else %}
                         <span>{{object.cargo}} </span>
+                        <p>Nível: {{object.cargo.nivel}}</p>
                         {% endif %}
 
 
@@ -57,26 +57,26 @@
 
                 <div class="card-body text-left">
                     <div class="progressoes">
-                    {% if object.categoria.id == 'TAE' %}
+                        {% if object.categoria.id == 'TAE' %}
 
 
 
-                    {% elif object.categoria.id  == 'DOC' %}
+                        {% elif object.categoria.id  == 'DOC' %}
 
-                    <h6>Informações Sobre Progressão Docente</h6>
-                    <h7>Conforme <a href="http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12772.htm" target="_blank">Lei nº. 12.772/2012</a></h7>
+                        <h6>Informações Sobre Progressão Docente</h6>
+                        <h7>Conforme <a href="http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12772.htm" target="_blank">Lei nº. 12.772/2012</a></h7>
 
-                    <p class="mb-0">
-                    <p>Art. 12.  O desenvolvimento na Carreira de Magistério Superior ocorrerá mediante <b>progressão funcional e promoção</b>.
-                    <p>§ 2o  A progressão na Carreira de Magistério Superior ocorrerá com base nos critérios gerais estabelecidos nesta Lei e observará, cumulativamente:
-                    </p>I - o cumprimento do interstício de 24 (vinte e quatro) meses de efetivo exercício em cada nível; e</p>
-                    <p>II - aprovação em avaliação de desempenho.</p>
-                    § 3o  A promoção ocorrerá observados o interstício mínimo de 24 (vinte e quatro) meses no último nível de cada Classe antecedente àquela para a qual se dará a promoção e, ainda, as seguintes condições:</p>
+                        <p class="mb-0">
+                        <p>Art. 12.  O desenvolvimento na Carreira de Magistério Superior ocorrerá mediante <b>progressão funcional e promoção</b>.
+                        <p>§ 2o  A progressão na Carreira de Magistério Superior ocorrerá com base nos critérios gerais estabelecidos nesta Lei e observará, cumulativamente:
+                        </p>I - o cumprimento do interstício de 24 (vinte e quatro) meses de efetivo exercício em cada nível; e</p>
+                        <p>II - aprovação em avaliação de desempenho.</p>
+                        § 3o  A promoção ocorrerá observados o interstício mínimo de 24 (vinte e quatro) meses no último nível de cada Classe antecedente àquela para a qual se dará a promoção e, ainda, as seguintes condições:</p>
 
 
-                    {% endif %}
+                        {% endif %}
 
-                   </div>
+                    </div>
 
                 </div>
 
@@ -116,7 +116,11 @@
                                 <td>{{ prog_a.nivel_capacitacao }}</td>
                                 {% endif %}
                                 <td>{{ prog_a.data_progressao }}</td>
-                                <td><a href="{{prog_a.portaria__portaria.url}}" target="_blank">{{prog_a.portaria}}</a></td>
+                                {% if prog_a.portaria.portaria.url != None %}
+                                <td><a href="{{prog_a.portaria.portaria.url}}" target="_blank">{{prog_a.portaria}}</a></td>
+                                {% else %}
+                                <td><a>{{prog_a.portaria}}</a></td>
+                                {% endif %}
                                 <td>{{ prog_a.data_prox_progressao}}</td>
                             </tr>
                             {%empty%}
@@ -147,15 +151,18 @@
                             {% for prog_b in progressoes_b %}
                             <tr>
                                 <td>{{ prog_b.padrao_tae }}</td>
-                                <!--if-->
                                 <td>{{ prog_b.data_progressao }}</td>
-                                <td><a href="{{prog_b.portaria__portaria.url}}" target="_blank">{{prog_b.portaria}}</a></td>
+                                {% if prog_b.portaria.portaria.url != None %}
+                                <td><a href="{{prog_b.portaria.portaria.url}}" target="_blank">{{prog_b.portaria}}</a></td>
+                                {% else %}
+                                <td>{{prog_b.portaria}}</td>
+                                {% endif %}
                                 <td>{{ prog_b.data_prox_progressao}}</td>
+                            </tbody>
                             </tr>
                             {%empty%}
                             <tr><p class="alert alert-warning">Ainda não há registros!</p></tr>
                             {% endfor %}
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -163,7 +170,7 @@
 
             {% endif %}
 
-                            <a href="{% url 'lista' %}" class="btn btn-default float-right">Voltar</a>
+            <a href="{% url 'lista' %}" class="btn btn-default float-right">Voltar</a>
 
         </div>
     </div>

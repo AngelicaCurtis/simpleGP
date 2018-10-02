@@ -99,7 +99,13 @@
                 <div class="form-group row">
                     <label class="col-sm-3 form-control-label">Portaria de Concessão</label>
                     <div class="col-sm-9">
+                        {% if object.portaria.portaria.url != None %}
                         <a href="{{object.portaria.portaria.url}}" target="_blank">{{object.portaria}}</a>
+                        {% else %}
+                       {{object.portaria}}
+                        {% endif %}
+
+
                     </div>
                 </div>
 

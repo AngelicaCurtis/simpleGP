@@ -38,7 +38,9 @@ class Cadastro(CreateView):
         context = super().get_context_data(**kwargs)
 
         # TODO: Verificar se é necessário carregar context (Não precisa carregar quando for submit)
-        context["servidor_data"] = Servidor.objects.get(id=self.initial["servidor"])
+        if self.initial.get('servidor', None):
+         context["servidor_data"] = Servidor.objects.get(id=self.initial.get("servidor"))
+
         return context
 
 
@@ -93,3 +95,8 @@ class ProgressaoDetalhes(DetailView):
         context = super().get_context_data(**kwargs)
         context['servidores'] = Servidor.objects.filter(id=self.object.id)
         return context
+
+
+
+class Historico(DetailView):
+    pass

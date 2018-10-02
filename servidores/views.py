@@ -86,7 +86,6 @@ def servidores_list(request):
     # lista_servidores = Servidor.objects.all()
 
     if termo_busca:
-        lista_servidores = Servidor.objects.all()
         lista_servidores = Servidor.objects.filter(nome__icontains=termo_busca) \
                            or Servidor.objects.filter(sobrenome__icontains=termo_busca) \
                            or Servidor.objects.filter(categoria__nome__icontains=termo_busca) \
@@ -127,15 +126,17 @@ class HistoricoProgressoes(DetailView):
 
         if self.object.categoria.id in 'DOC':
             context["tipo_progressao_a"] = "Progressões Docente"
-            context['progressoes_a'] = Progressao.objects.filter(servidor__id=self.object.id)
+            context['progressoes_a'] = Progressao.objects.filter(servidor__id=self.object.id).select_related('portaria')
 
 
 
         elif self.object.categoria.id in 'TAE':
             context["tipo_progressao_a"] = "Progressões por Capacitação Profissional"
-            context['progressoes_a'] = Progressao.objects.filter(servidor__id=self.object.id).filter(tipo_progressao_tae=2)\
-                .order_by('nivel_capacitacao')
+            context['progressoes_a'] = Progressao.objects.select_related('portaria').filter(servidor__id=self.object.id)\
+                .filter(tipo_progressao_tae=2).order_by('nivel_capacitacao')
             context["tipo_progressao_b"] = "Progressões por Mérito Profissional"
-            context['progressoes_b'] = Progressao.objects.filter(servidor__id=self.object.id).filter(tipo_progressao_tae=1)
+            context['progressoes_b'] = Progressao.objects.select_related('portaria').filter(servidor__id=self.object.id)\
+                .filter(tipo_progressao_tae=1)
+
 
         return context
