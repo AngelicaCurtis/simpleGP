@@ -111,6 +111,7 @@
                             {% for prog_a in progressoes_a %}
                             <tr>
                                 {% if object.categoria.id  == 'DOC' %}
+                                <td>{{ prog_a.tipo_progressao_docente }}</td>
                                 <td>Classe D{{prog_a.classe_docente}} / Nível {{prog_a.nivel_docente}}</td>
                                 {% else %}
                                 <td>{{ prog_a.nivel_capacitacao }}</td>
