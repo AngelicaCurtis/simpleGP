@@ -35,8 +35,10 @@ class Progressao(models.Model):
 @receiver(pre_save, sender=Progressao)
 def callback_progressao(sender, instance, *args, **kwargs):
     if instance.tipo_progressao_docente is not None:
-        instance.data_prox_progressao = (instance.data_progressao + relativedelta(years=+1, months=+6))
-    elif instance.tipo_progressao_tae is not None:
         instance.data_prox_progressao = (instance.data_progressao + relativedelta(years=+2))
+
+    elif instance.tipo_progressao_tae is not None:
+        instance.data_prox_progressao = (instance.data_progressao + relativedelta(years=+1, months=+6))
+
 
 

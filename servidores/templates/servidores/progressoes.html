@@ -111,18 +111,24 @@
                             {% for prog_a in progressoes_a %}
                             <tr>
                                 {% if object.categoria.id  == 'DOC' %}
-                                <td>{{ prog_a.tipo_progressao_docente }}</td>
                                 <td>Classe D{{prog_a.classe_docente}} / Nível {{prog_a.nivel_docente}}</td>
                                 {% else %}
                                 <td>{{ prog_a.nivel_capacitacao }}</td>
                                 {% endif %}
+
                                 <td>{{ prog_a.data_progressao }}</td>
+
                                 {% if prog_a.portaria.portaria.url != None %}
                                 <td><a href="{{prog_a.portaria.portaria.url}}" target="_blank">{{prog_a.portaria}}</a></td>
                                 {% else %}
                                 <td><a>{{prog_a.portaria}}</a></td>
                                 {% endif %}
+
+                                {% if prog_a.nivel_capacitacao >= '4' %}
+                                        <td>Não há</td>
+                                {% else %}
                                 <td>{{ prog_a.data_prox_progressao}}</td>
+                                {% endif %}
                             </tr>
                             {%empty%}
                             <tr >Ainda não há registros!</tr>

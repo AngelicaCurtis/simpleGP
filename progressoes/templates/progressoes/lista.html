@@ -3,7 +3,7 @@
 {% load minhas_tags %}
 
 
-{% block title %}Lista Progressoes{% endblock %}
+{% block title %}Simple GP|Lista Progressões{% endblock %}
 
 
 {% block main %}
@@ -90,8 +90,13 @@
 
 
                                     <td>{{progressao.data_progressao}}</td>
+                                    {% if progressao.tipo_progressao_tae == '2' and progressao.nivel_capacitacao >= '4' %}
 
+                                        <td>Não há</td>
+
+                                    {% else %}
                                     <td>{{progressao.data_prox_progressao}}</td>
+                                    {% endif %}
 
 
                                     <td><a href="{% url 'servidor-progressoes' progressao.servidor.id %}">{{progressao.servidor}}</a></td>

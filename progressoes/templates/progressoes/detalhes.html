@@ -2,141 +2,154 @@
 {% load staticfiles %}
 {% load bootstrap %}
 
-{% block title %}Progressoes{% endblock %}
+{% block title %}Simple GP|Detalhes Progressão{% endblock %}
 
 
 {% block main %}
 
-<!-- Form Elements -->
-<div class="col-lg-12">
-    <div class="card">
-        <div class="card-close">
-            <div class="dropdown">
-                <button type="button" id="closeCard5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
-                <div aria-labelledby="closeCard5" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#"
-                                                                                                          class="dropdown-item remove">
-                    <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i
-                        class="fa fa-gear"></i>Edit</a></div>
-            </div>
-        </div>
-        <div class="card-header d-flex align-items-center">
-            <h3 class="h4">Progressão detalhada</h3>
-        </div>
-        <div class="card-body">
-            <form class="form-horizontal">
+<section class="dashboard-counts no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row bg-white has-shadow">
+
+            <!-- Form Elements -->
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-close">
+                        <div class="dropdown">
+                            <button type="button" id="closeCard5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                            <div aria-labelledby="closeCard5" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#"
+                                                                                                                      class="dropdown-item remove">
+                                <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i
+                                    class="fa fa-gear"></i>Edit</a></div>
+                        </div>
+                    </div>
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">Progressão detalhada</h3>
+                    </div>
+                    <div class="card-body">
+                        <form class="form-horizontal">
 
 
-                <div class="card-body text-right">
-                    {% if object.foto.url != None %}
-                    <div class="client-avatar"><img src="{{object.foto.url}}" alt="..."
-                                                    class="img-fluid rounded-circle img-thumbnail"
-                                                    style="
+                            <div class="card-body text-right">
+                                {% if object.foto.url != None %}
+                                <div class="client-avatar"><img src="{{object.foto.url}}" alt="..."
+                                                                class="img-fluid rounded-circle img-thumbnail"
+                                                                style="
                                                                     height:200px;
                                                                     width:auto;
                                                                     border-radius: 10px 70px !important;">
-                    </div>
-                    {% endif %}
+                                </div>
+                                {% endif %}
 
 
 
-                        <div class="client-title">
-                            <h3> {{object.servidor}}</h3>
-                            <p>{{object.categoria}}</p>
-                            {% if object.servidor.cargo == None %}
-                            <span>Área: {{object.servidor.area}} </span>
-                            {% else %}
-                            <span>{{object.servidor.cargo}} </span>
-                            {% endif %}
-                        </div>
+                                <div class="client-title">
+                                    <h3> {{object.servidor}}</h3>
+                                    <p>{{object.categoria}}</p>
+                                    {% if object.servidor.cargo == None %}
+                                    <p>Docente</p>
+                                    <span>Área: {{object.servidor.area}} </span>
+                                    {% else %}
+                                    <span>{{object.servidor.cargo}} </span>
+                                    {% endif %}
+                                </div>
 
-                        </div>
-
-
-                <div class="form-group row">
-                    <label class="col-sm-3 form-control-label">Progressão</label>
-
-                    {% if object.get_tipo_progressao_docente_display == None %}
-                    <div class="col-sm-3">
-                        {{object.get_tipo_progressao_tae_display}}
-                    </div>
-                    {% else %}
-                    <div>{{object.get_tipo_progressao_docente_display}}</div>
-                    {% endif %}
-
-
-                    <div class="col-sm-3">
-                        {{object.tipo_progressao}}
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-sm-3 form-control-label">Data Progressão</label>
-                    <div class="col-sm-3">
-                        {{object.data_progressao}}
-                    </div>
-                </div>
-                {% if object.nivel_capacitacao == None %}
-
-                     {% if object.get_padrao_vencimento_display != None %}
-                        <div class="form-group row">
-                            <label class="col-sm-3 form-control-label">Padrão de Vencimento</label>
-                            <div class="col-sm-9">
-                                {{object.get_padrao_vencimento_display}}
                             </div>
-                        </div>
-                      {% endif %}
+
+
+                            <div class="form-group">
+                                <label class="col-sm-3 form-control-label">Progressão</label>
+
+                                {% if object.get_tipo_progressao_docente_display == None %}
+                                <div class="col-sm-3 col-sm-9">
+                                    {{object.get_tipo_progressao_tae_display}}
+                                </div>
+                                {% else %}
+                                <div class="col-sm-3 col-sm-9">
+                                    {{object.get_tipo_progressao_docente_display}}
+                                </div>
+                                {% endif %}
+
+
+                            <div class="form-group">
+                                <label class="col-sm-3 form-control-label">Data Progressão</label>
+                                <div class="col-sm-3 col-sm-9">
+                                    {{object.data_progressao}}
+                                </div>
+                            </div>
+                            {% if object.nivel_capacitacao == None %}
+
+                            {% if object.get_padrao_vencimento_display != None %}
+                            <div class="form-group">
+                                <label class="col-sm-3 form-control-label">Padrão de Vencimento</label>
+                                <div class="col-sm-3 col-sm-9">
+                                    {{object.get_padrao_vencimento_display}}
+                                </div>
+                            </div>
+                            {% endif %}
 
 
 
-                {% else %}
-                <div class="form-group row">
-                    <label class="col-sm-3 form-control-label">Nível de Capacitação</label>
-                    <div class="col-sm-9">
-                        {{object.get_nivel_capacitacao_display}}
+                            {% else %}
+                            <div class="form-group">
+                                <label class="col-sm-3 form-control-label">Nível de Capacitação</label>
+                                <div class="col-sm-3 col-sm-9">
+                                    {{object.get_nivel_capacitacao_display}}
+                                </div>
+                            </div>
+
+                            {% endif%}
+
+
+                            <div class="form-group">
+                                <label class="col-sm-3 form-control-label">Portaria de Concessão</label>
+                                <div class="col-sm-3 col-sm-9">
+                                    {% if object.portaria.portaria.url != None %}
+                                    <a href="{{object.portaria.portaria.url}}" target="_blank">{{object.portaria}}</a>
+                                    {% else %}
+                                    {{object.portaria}}
+                                    {% endif %}
+
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {% if object.tipo_progressao_tae == '2' %}
+                                    {% if object.nivel_capacitacao >= '4' %}
+                                       <div class="col-sm-3 col-sm-9">
+                                            <span class="d-inline p-2 bg-primary text-white">Última Progressão por Capacitação Profissional </span>
+                                       </div>
+                                    {% endif %}
+                                {% else %}
+                                <label class="col-sm-3 form-control-label">Data Próxima Progressão</label>
+                                <div class="col-sm-3 col-sm-9">
+                                    {{object.data_prox_progressao}}
+                                </div>
+                                {% endif %}
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <div class="col-sm-3 col-sm-9">
+
+                                    <a href="{% url 'lista' %}" class="btn btn-secondary">Voltar</a>
+
+                                    <a class="btn btn-primary" href="{% url 'atualizar' progressao.id %}">
+                                        <i class="far fa-edit"></i>Editar</a>
+                                </div>
+
+
+                            </div>
+                        </form>
                     </div>
                 </div>
-
-                {% endif%}
-
-
-                <div class="form-group row">
-                    <label class="col-sm-3 form-control-label">Portaria de Concessão</label>
-                    <div class="col-sm-9">
-                        {% if object.portaria.portaria.url != None %}
-                        <a href="{{object.portaria.portaria.url}}" target="_blank">{{object.portaria}}</a>
-                        {% else %}
-                       {{object.portaria}}
-                        {% endif %}
-
-
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-sm-3 form-control-label">Data Proxíma Progressão</label>
-                    <div class="col-sm-9">
-                        {{object.data_prox_progressao}}
-                    </div>
-                </div>
-
-
-                <div class="form-group row">
-                   
-                    <div class="col-sm-9">
-
-                        <a href="{% url 'lista' %}" class="btn btn-secondary">Voltar</a>
-
-                        <a class="btn btn-primary" href="{% url 'atualizar' progressao.id %}">
-                            <i class="far fa-edit"></i>Editar</a>
-                    </div>
-
-
-                </div>
-            </form>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
 
 {% endblock%}

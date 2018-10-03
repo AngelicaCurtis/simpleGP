@@ -136,7 +136,7 @@ class HistoricoProgressoes(DetailView):
                 .filter(tipo_progressao_tae=2).order_by('nivel_capacitacao')
             context["tipo_progressao_b"] = "Progressões por Mérito Profissional"
             context['progressoes_b'] = Progressao.objects.select_related('portaria').filter(servidor__id=self.object.id)\
-                .filter(tipo_progressao_tae=1)
+                .filter(tipo_progressao_tae=1).order_by('padrao_tae')
 
 
         return context
