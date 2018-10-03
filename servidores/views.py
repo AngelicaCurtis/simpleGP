@@ -99,6 +99,25 @@ def servidores_list(request):
     return render(request, 'servidores/servidor_list.html', {'servidores': servidores})
 
 
+@login_required
+def tipo_sanguineo(request):
+    termo_busca = request.GET.get("busca", None)
+    # lista_servidores = Servidor.objects.all()
+
+    if termo_busca:
+        lista_servidores = Servidor.objects.filter(nome__icontains=termo_busca) \
+                           or Servidor.objects.filter(sobrenome__icontains=termo_busca) \
+                           or Servidor.objects.filter(categoria__nome__icontains=termo_busca) \
+                           or Servidor.objects.filter(cargo__nome__icontains=termo_busca) \
+                           or Servidor.objects.filter(area__nome__icontains=termo_busca)
+    else:
+        lista_servidores = Servidor.objects.order_by('nome')
+    paginator = Paginator(lista_servidores, 5)
+    page = request.GET.get('page')
+    servidores = paginator.get_page(page)
+    return render(request, 'servidores/tipo-sanguineo.html', {'servidores': servidores})
+
+
 def atualizar_servidor(request, id):
     servidor = get_object_or_404(Servidor, pk=id)
     form = ServidorForm(request.POST or None, request.FILES or None, instance=servidor)

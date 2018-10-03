@@ -58,8 +58,126 @@
                 <div class="card-body text-left">
                     <div class="progressoes">
                         {% if object.categoria.id == 'TAE' %}
+                        <h5>Informações Sobre Progressões TAE</h5>
+                        <br/>
+                        <h6>Progressão por Mérito</h6>
+                        <p>A progressão por mérito profissional é a mudança do padrão de vencimento (que vai do 1 ao 16, dentro de cada classe), a cada 18 meses de efetivo exercício.
+</p>
+                        <h6>Progressão por Capacitação</h6>
+                        <p> A progressão por capacitação profissional é a mudança de nível de capacitação, dentro do mesmo cargo e da mesma classe, decorrente da obtenção pelo servidor de certificação em programa de capacitação. Essa mudança, por exemplo, pode ser do nível I para o II, chegando até o IV. O curso deverá ser compatível com o cargo ocupado, o ambiente organizacional e a carga horária mínima exigida. Esses requisitos são analisados no processo de progressão.
+                            Para requerer a progressão funcional por esse tipo de processo, o servidor deverá respeitar o interstício de 18 meses.</p>
 
+                        <p><strong>TABELA PARA PROGRESSÃO POR CAPACITAÇÃO PROFISSIONAL</strong></p>
+                          <p>(Redação dada pela Lei nº 12.772, de 2012)</p>
 
+                            {% if object.cargo.nivel == 'C' %}
+                               <table class="table table-bordered">
+                                   <thead>
+                                   <tr>
+                                       <th>Nível de Classificação</th>
+                                       <th>Nível de Capacitação</th>
+                                       <th>Cargo Horária de Capacitação</th>
+                                   </tr>
+                                   </thead>
+                                   <tbody>
+                                   <tr>
+                                       <td rowspan="4">C</td>
+
+                                       <td>I</td>
+
+                                       <td>Exigência Mínima do cargo</td>
+                                   </tr>
+                                   <tr>
+
+                                       <td>II</td>
+                                       <td>60 horas</td>
+                                   </tr>
+                                   <tr>
+
+                                       <td>III</td>
+                                       <td>90 horas</td>
+                                   </tr>
+                                     <tr>
+
+                                       <td>IV</td>
+                                       <td>120 horas</td>
+                                   </tr>
+                                   </tbody>
+
+                               </table>
+
+                            {% elif object.cargo.nivel == 'D' %}
+                                         <table class="table table-bordered">
+                                   <thead>
+                                   <tr>
+                                       <th>Nível de Classificação</th>
+                                       <th>Nível de Capacitação</th>
+                                       <th>Cargo Horária de Capacitação</th>
+                                   </tr>
+                                   </thead>
+                                   <tbody>
+                                   <tr>
+                                       <td rowspan="4">D</td>
+
+                                       <td>I</td>
+
+                                       <td>Exigência Mínima do cargo</td>
+                                   </tr>
+                                   <tr>
+
+                                       <td>II</td>
+                                       <td>90 horas</td>
+                                   </tr>
+                                   <tr>
+
+                                       <td>III</td>
+                                       <td>120 horas</td>
+                                   </tr>
+                                     <tr>
+
+                                       <td>IV</td>
+                                       <td>150 horas</td>
+                                   </tr>
+                                   </tbody>
+
+                               </table>
+                            {% else %}
+
+                                       <table class="table table-bordered">
+                                   <thead>
+                                   <tr>
+                                       <th>Nível de Classificação</th>
+                                       <th>Nível de Capacitação</th>
+                                       <th>Cargo Horária de Capacitação</th>
+                                   </tr>
+                                   </thead>
+                                   <tbody>
+                                   <tr>
+                                       <td rowspan="4">E</td>
+
+                                       <td>I</td>
+
+                                       <td>Exigência Mínima do cargo</td>
+                                   </tr>
+                                   <tr>
+
+                                       <td>II</td>
+                                       <td>120 horas</td>
+                                   </tr>
+                                   <tr>
+
+                                       <td>III</td>
+                                       <td>150 horas</td>
+                                   </tr>
+                                     <tr>
+
+                                       <td>IV</td>
+                                       <td>Aperfeiçoamento ou curso de capacitação igual ou superior a 180 horas</td>
+                                   </tr>
+                                   </tbody>
+
+                               </table>
+                            {% endif %}
 
                         {% elif object.categoria.id  == 'DOC' %}
 
