@@ -19,6 +19,8 @@ class Cadastro(CreateView):
               "nivel_capacitacao",
               "padrao_tae",
               "data_progressao",
+              "carga_horaria_apresentada",
+              "homologacao",
               "portaria"]
 
     success_url = '/progressoes/lista'

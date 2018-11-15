@@ -18,6 +18,9 @@ class Progressao(models.Model):
     nivel_capacitacao = models.CharField(choices=const.NIVEL_TAE, max_length=1, null=True, blank=True)
     padrao_tae = models.CharField(choices=const.PADRAO_TAE, max_length=2, null=True, blank=True)
     data_progressao = models.DateField()
+    carga_horaria_apresentada = models.IntegerField()
+    carga_horaria_excedente = models.IntegerField()
+    homologacao = models.FileField(upload_to="homologacao", null=True, blank=True)
     portaria = models.OneToOneField(Portaria, on_delete=models.CASCADE)
     data_prox_progressao = models.DateField(null=True, blank=True)
 

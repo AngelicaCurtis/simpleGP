@@ -1,9 +1,10 @@
 from django.forms import ModelForm
+from django import forms
 
 from progressoes.models import Progressao
 
 
-class ProgressaoForm(ModelForm):
+class ProgressaoForm(forms.ModelForm):
     class Meta:
         model = Progressao
         fields = {

@@ -142,7 +142,7 @@
                         </li>
                         <!-- Languages dropdown    -->
 
-                        <span class="d-none d-sm-inline-block">Olá {{user.username}}</span></a>
+                        <span class="d-none d-sm-inline-block text-capitalize">Olá {{user.username}}</span></a>
 
 
                         <!-- Logout    -->
@@ -161,7 +161,7 @@
                 <div class="avatar"><img src="{% static 'img/avatar-8.jpg' %}" alt="..."
                                          class="img-fluid rounded-circle"></div>
                 <div class="title">
-                    <h1 class="h4">Fulana de Tal</h1>
+                    <h1 class="h4 text-capitalize">{{user.username}}</h1>
                     <p>CGP</p>
                 </div>
             </div>
@@ -176,7 +176,7 @@
                         <li class="{% nav_active request 'lista-servidores' %}"><a href="{%url 'lista-servidores'%}">Consultar</a>
                         </li>
                         <li class="{% nav_active request 'servidor-form' %}"><a
-                                href="{%url 'servidor-form'%}">Cadastrar</a></li>
+                                href="{%url 'servidor-formulario'%}">Cadastrar</a></li>
                         <!--<li class="{% nav_active request 'tipo-sanguineo' %}"><a-->
                                 <!--href="{%url 'tipo-sanguineo'%}">Tipo Sanguineo</a></li>-->
                         <li><a href="#">Relatórios</a></li>

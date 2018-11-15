@@ -16,33 +16,7 @@ def home(request):
     return render(request, 'servidores/home.html')
 
 
-#
-# @login_required
-# def lista_servidores(request):
-#
-#     servidores = Servidor.objects.all()
-#     return render(request, 'servidores/lista-servidores.html', {'servidores': servidores})
 
-# lista usando ListView
-# @method_decorator(login_required, name='dispatch')
-# class ServidorList(LoginRequiredMixin, ListView):
-#
-#     model = Servidor
-#     object_list: Servidor
-#
-#     def get_queryset(self):
-#         try:
-#             name = self.kwargs['busca']
-#         except:
-#             name = ''
-#         if (name != ''):
-#             object_list = self.model.objects.filter(name__icontains=name)
-#         else:
-#             object_list = self.model.objects.all()
-#         return object_list
-
-
-# list(Servidor.objects.all().order_by('nome'))
 
 class ServidorOrder(ListView):
     model = Servidor
@@ -57,16 +31,28 @@ class ServidorDetail(DetailView):
 
 class ServidorCreate(CreateView):
     model = Servidor
-    fields = ['siape', 'nome', 'sobrenome', 'data_nasc', 'sexo', 'tipo_sanguineo', 'email', 'naturalidade',
-              'categoria', 'cargo', 'area', 'data_exercicio', 'campus', 'foto']
+    fields = ['categoria', 'siape', 'nome', 'sobrenome', 'data_nasc', 'sexo', 'tipo_sanguineo', 'email', 'naturalidade',
+               'cargo', 'area', 'data_exercicio', 'campus', 'foto']
 
     success_url = '/servidores/lista-servidores'
 
 
+def servidor_form(request):
+    form = ServidorForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('lista-servidores')
+
+    context = {
+        'form': form
+    }
+    return render(request, 'servidores/servidor_formulario.html', context)
+
+
 class ServidorUpdate(UpdateView):
     model = Servidor
-    fields = ['siape', 'nome', 'sobrenome', 'data_nasc', 'sexo', 'tipo_sanguineo', 'email', 'naturalidade',
-              'categoria', 'cargo', 'area', 'data_exercicio', 'campus', 'foto']
+    fields = ['categoria', 'siape', 'nome', 'sobrenome', 'data_nasc', 'sexo', 'tipo_sanguineo', 'email', 'naturalidade',
+              'cargo', 'area', 'data_exercicio', 'campus', 'foto']
 
     def get_success_url(self):  ## retorna apenas em caso de sucesso
         return reverse_lazy('lista-servidores')
@@ -90,7 +76,9 @@ def servidores_list(request):
                            or Servidor.objects.filter(sobrenome__icontains=termo_busca) \
                            or Servidor.objects.filter(categoria__nome__icontains=termo_busca) \
                            or Servidor.objects.filter(cargo__nome__icontains=termo_busca) \
-                           or Servidor.objects.filter(area__nome__icontains=termo_busca)
+                           or Servidor.objects.filter(area__nome__icontains=termo_busca)\
+                           or Servidor.objects.filter(campus__nome__icontains=termo_busca)
+
     else:
         lista_servidores = Servidor.objects.order_by('nome')
     paginator = Paginator(lista_servidores, 5)
