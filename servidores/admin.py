@@ -15,10 +15,8 @@ admin.site.register(Progressao)
 admin.site.register(Portaria)
 admin.site.register(Campus)
 admin.site.register(TipoSanguineo)
-admin.site.register(EstagioProbatorio)
+# admin.site.register(EstagioProbatorio)
 admin.site.register(Avaliacao)
 
 
-class MyModelAdmin(admin.ModelAdmin):
-    inlines = [EstagioProbatorio, Avaliacao]
 

@@ -17,6 +17,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.contrib.auth import urls
 from django.urls import path, include
 from django.views.generic import TemplateView
 
@@ -27,6 +28,8 @@ from aniversarios import urls as aniversarios_urls
 from servidores.views import home
 
 urlpatterns = [
+
+                  path('accounts/', include('django.contrib.auth.urls')),
                   path('admin/', admin.site.urls),
                   path('login/', auth_views.LoginView.as_view(), name='login'),
                   path('logout/', auth_views.LogoutView.as_view(), {'next_page': 'login'}, name='sair'),

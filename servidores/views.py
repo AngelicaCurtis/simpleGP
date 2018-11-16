@@ -1,7 +1,9 @@
 from datetime import date, timedelta
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -18,26 +20,28 @@ def home(request):
 
 
 
-class ServidorOrder(ListView):
+class ServidorOrder(LoginRequiredMixin, ListView):
     model = Servidor
     model.objects.all().order_by('nome')
 
 
 # detalha servidor
 
-class ServidorDetail(DetailView):
+class ServidorDetail(LoginRequiredMixin, DetailView):
     model = Servidor
 
 
-class ServidorCreate(CreateView):
+class ServidorCreate(LoginRequiredMixin, CreateView):
     model = Servidor
     fields = ['categoria', 'siape', 'nome', 'sobrenome', 'data_nasc', 'sexo', 'tipo_sanguineo', 'email', 'naturalidade',
                'cargo', 'area', 'data_exercicio', 'campus', 'foto']
 
     success_url = '/servidores/lista-servidores'
 
-
+@login_required
 def servidor_form(request):
+    if not request.user.has_perm('servidores.add_servidor'):
+        return HttpResponse("Não Autorizado!")
     form = ServidorForm(request.POST or None)
     if form.is_valid():
         form.save()
@@ -49,7 +53,8 @@ def servidor_form(request):
     return render(request, 'servidores/servidor_formulario.html', context)
 
 
-class ServidorUpdate(UpdateView):
+class ServidorUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = ('servidores.atualizar_servidor')
     model = Servidor
     fields = ['categoria', 'siape', 'nome', 'sobrenome', 'data_nasc', 'sexo', 'tipo_sanguineo', 'email', 'naturalidade',
               'cargo', 'area', 'data_exercicio', 'campus', 'foto']
@@ -58,7 +63,8 @@ class ServidorUpdate(UpdateView):
         return reverse_lazy('lista-servidores')
 
 
-class Delete(DeleteView):
+class Delete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    permission_required = ('servidores.deletar_servidor')
     model = Servidor
 
     def get_success_url(self):  ## retorna apenas em caso de sucesso
@@ -68,8 +74,10 @@ class Delete(DeleteView):
 # fixme implementar formulario editando campos pelo html
 @login_required
 def servidores_list(request):
+    if not request.user.has_perm('servidores.visualizar_servidor'):
+        return HttpResponse("Não Autorizado!")
     termo_busca = request.GET.get("busca", None)
-    # lista_servidores = Servidor.objects.all()
+
 
     if termo_busca:
         lista_servidores = Servidor.objects.filter(nome__icontains=termo_busca) \
@@ -126,6 +134,10 @@ def deletar_servidor(request, id):
 
 
 class HistoricoProgressoes(DetailView):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.has_perm('servidores.visualizar_servidor'):
+            return HttpResponse("Não Autorizado!")
+        return super(HistoricoProgressoes, self).dispatch(request, *args, **kwargs)
     model = Servidor
 
     def get_context_data(self, **kwargs):

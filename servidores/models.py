@@ -50,6 +50,12 @@ class Servidor(models.Model):
 
     class Meta:
         verbose_name_plural = 'Servidores'
+        permissions = (
+            ('cadastrar_servidor', 'Usuário pode cadastrar novo servidor'),
+            ('visualizar_servidor', 'Usuário pode visualizar cadastro de servidor'),
+            ('atualizar_servidor', 'Usuário pode atualizar informações'),
+            ('deletar_servidor', 'Usuário pode deletar o cadastro do servidor')
+        )
 
         unique_together = (
             ("siape", "nome", "cargo"), ("siape", "nome", "area"))
