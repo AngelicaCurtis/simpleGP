@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.db import models
 from django.template.loader import render_to_string
@@ -33,6 +34,7 @@ class Area(models.Model):
 
 # TODO melhorar modelagem
 class Servidor(models.Model):
+    user = models.OneToOneField(to=User, on_delete=models.CASCADE, null=True, unique=True)
     siape = models.CharField("SIAPE", max_length=7, unique=True)
     nome = models.CharField(max_length=50, help_text="Obrigatório")
     sobrenome = models.CharField(max_length=200)
