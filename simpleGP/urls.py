@@ -22,7 +22,10 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 
 from home import urls as home_urls
+from user import urls as user_urls
 from progressoes import urls as progressoes_urls
+from portarias import urls as portarias_urls
+from estagioProbatorio import urls as estagios_urls
 from servidores import urls as servidores_urls
 from aniversarios import urls as aniversarios_urls
 from servidores.views import home
@@ -34,9 +37,12 @@ urlpatterns = [
                   path('login/', auth_views.LoginView.as_view(), name='login'),
                   path('logout/', auth_views.LogoutView.as_view(), {'next_page': 'login'}, name='sair'),
                   path('home/', home),
+                  path('estagios/', include(estagios_urls)),
                   path('', include(home_urls)),
+                  path('user', include(user_urls)),
                   path('aniversarios/', include(aniversarios_urls)),
                   path('progressoes/', include(progressoes_urls)),
+                  path('portarias/', include(portarias_urls)),
                   path('servidores/', include(servidores_urls)),
                   path('index/', TemplateView.as_view(template_name='index.html')),  # usando TemplateView
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # usado somente em desenvolvimento

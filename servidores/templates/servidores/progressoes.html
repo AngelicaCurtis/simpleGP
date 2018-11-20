@@ -4,11 +4,12 @@
 {% block title %}Histórico de Progressões{% endblock %}
 
 
+{% block titulo %} Minhas Progressões {% endblock %}
 {% block main %}
 
 <!-- Page Header-->
 
-<!-- Page Header-->
+
 
 <section class="dashboard-counts no-padding-bottom">
     <div class="container-fluid">
@@ -222,6 +223,10 @@
                                 {% endif %}
                                 <th>Data</th>
                                 <th>Portaria</th>
+                                 {% if prog_a.carga_horaria_excedente != None %}
+                                <th>Carga Horária Exced.</th>
+                                {% else %}
+                                {% endif %}
                                 <th>Data Prevista Próxima Progressão</th>
                             </tr>
                             </thead>
@@ -240,6 +245,11 @@
                                 <td><a href="{{prog_a.portaria.portaria.url}}" target="_blank">{{prog_a.portaria}}</a></td>
                                 {% else %}
                                 <td><a>{{prog_a.portaria}}</a></td>
+                                {% endif %}
+
+                                {% if prog_a.carga_horaria_excedente != None %}
+                                <td>{{prog_a.carga_horaria_excedente}}</td>
+                                {% else %}
                                 {% endif %}
 
                                 {% if prog_a.nivel_capacitacao >= '4' %}

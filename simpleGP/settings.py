@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'progressoes',
     'aniversarios',
     'tipoSanguineo',
-    'estagioProbatorio'
+    'estagioProbatorio',
+    'user'
 
 
 ]
@@ -82,9 +83,15 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'simpleGP.wsgi.application'
 
 # Database
+# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
+# Database
+# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
+
+#Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
@@ -92,7 +99,7 @@ default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'simple-gp',
+        'NAME': 'simple',
         'USER': 'postgres',
         'PASSWORD': 'sitrucatina',
         'HOST': '127.0.0.1',
@@ -137,6 +144,7 @@ USE_TZ = True
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'statics'),
 )
+AUTH_USER_MODEL = 'user.User'
 
 MEDIA_URL = '/media/'
 

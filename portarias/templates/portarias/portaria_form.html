@@ -1,0 +1,118 @@
+{% extends 'cabecalho.html' %}
+{% load bootstrap %}
+
+
+{% block title %}Simple GP|Cadastro Servidor{% endblock %}
+
+{% block titulo %}Portarias {% endblock %}
+
+{% block main %}
+
+<!-- Form Elements -->
+<section class="dashboard-counts no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row bg-white has-shadow">
+
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-close">
+                        <div class="dropdown">
+                            <button type="button" id="closeCard5" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i>
+                            </button>
+                            <div aria-labelledby="closeCard5" class="dropdown-menu dropdown-menu-right has-shadow"><a
+                                    href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a
+                                    href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                        </div>
+                    </div>
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">Cadastro Portaria</h3>
+                    </div>
+                    <div class="card-body">
+                        <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+
+                                <div class="line"></div>
+                                <div class="form-group">
+                                    {{form.numero | bootstrap}}
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="line"></div>
+                                    <div class="form-group">
+                                        <!--<label class="form-control-label">Nível</label>-->
+                                        {{form.ano | bootstrap}}
+                                    </div>
+
+                                    <div class="line"></div>
+                                    <div class="form-group">
+                                        {{form.origem | bootstrap}}
+                                    </div>
+
+                                    <div class="line"></div>
+                                    <div class="form-group">
+                                        <!--<label class="form-control-label">Nível</label>-->
+                                        {{form.descricao | bootstrap}}
+                                    </div>
+
+                                    {% if form.portaria.url != None %}
+                                    <a href="{{form.portaria.url}}" target="_blank">{{form.portaria}}</a>
+                                    {% else %}
+                                    <td><a>{{form.portaria}}</a></td>
+                                    {% endif %}
+
+
+
+
+
+
+
+
+                                <a href="{% url 'lista-servidores' %}" class="btn btn-secondary">Cancelar</a>
+
+                                <button type="submit" class="btn btn-primary" value="Save">Salvar</button>
+
+
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+$(document).ready(function() {
+
+    var inputArea = $("#input-area");
+    var inputCargo = $("#input-cargo");
+
+    $("#id_categoria").on('change', function(evt) {
+        var categoriaSelecionada = $(this).val();
+
+        switch(categoriaSelecionada) {
+            case "TAE":
+                inputCargo.show();
+                inputArea.hide();
+                break;
+
+            case "PROF_S":
+            case "DOC":
+                inputCargo.hide();
+                inputArea.show();
+                break;
+
+            default:
+                inputCargo.show();
+                inputArea.show();
+        }
+
+    });
+
+});
+</script>
+{% endblock %}

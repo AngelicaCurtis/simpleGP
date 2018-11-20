@@ -142,7 +142,8 @@
                         </li>
                         <!-- Languages dropdown    -->
 
-                        <span class="d-none d-sm-inline-block text-capitalize">Olá {{user.username}}</span></a>
+                        <span class="d-none d-sm-inline-block text-capitalize">Olá {{user.first_name}}</span></a>
+
 
 
                         <!-- Logout    -->
@@ -158,32 +159,57 @@
         <nav class="side-navbar">
             <!-- Sidebar Header-->
             <div class="sidebar-header d-flex align-items-center">
-                <div class="avatar"><img src="{% static 'img/avatar-8.jpg' %}" alt="..."
-                                         class="img-fluid rounded-circle"></div>
+                {% if user.servidor.foto.url != None %}
+                <div class="avatar"><img src="{{ user.servidor.foto.url }}" alt="..."
+                                         class="img-fluid rounded-circle">
+                </div>
+                {% else %}
+                    {% if user.servidor.get_sexo_display == 'Feminino'%}
+                     <div class="avatar"><img src="{% static 'img/2.jpg' %}" alt="..."
+                                             class="img-fluid rounded-circle">
+                    </div>
+                    {% else %}
+                    <div class="avatar"><img src="{% static 'img/1.jpg' %}" alt="..."
+                                             class="img-fluid rounded-circle">
+                    </div>
+                    {% endif %}
+                {% endif %}
+
+
                 <div class="title">
-                    <h1 class="h4 text-capitalize">{{user.username}}</h1>
+                    <h1 class="h4 text-capitalize">{{user.first_name}}</h1>
+                    {% if user.is_staff == True %}
                     <p>CGP</p>
+                    {% else %}
+                        {% if user.servidor.cargo != None %}
+                        <p>{{user.servidor.cargo}}</p>
+                        {% else %}
+                        <p> {{user.servidor.area}}</p>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
-            <!-- Sidebar Navidation Menus--><span class="heading">Menu</span>
+
             <ul class="list-unstyled">
-                <li class="{% nav_active request 'index' %}"><a href="{% url 'index'%}"> <i class="icon-home"></i>Home
+                <li class="{% nav_active request 'index' %}"><a href="{% url 'index'%}"> <i class="fas fa-home"></i>Home
                 </a></li>
-                <li><a href="#servidores" aria-expanded="false" data-toggle="collapse"> <i
-                        class="icon-interface-windows"></i>Servidores</a>
+                {% if user.is_staff == True %}
+                 <!-- Sidebar Navidation Menus--><span class="heading">Menu</span>
+                    <li><a href="#servidores" aria-expanded="false" data-toggle="collapse"> <i
+                        class="fa fa-users"></i>Servidores</a>
                     <ul id="servidores"
                         class="collapse list-unstyled {% nav_active request 'lista-servidores|servidor-form' 'show' %}">
                         <li class="{% nav_active request 'lista-servidores' %}"><a href="{%url 'lista-servidores'%}">Consultar</a>
                         </li>
                         <li class="{% nav_active request 'servidor-form' %}"><a
-                                href="{%url 'servidor-formulario'%}">Cadastrar</a></li>
+                                href="{%url 'servidor-form'%}">Cadastrar</a></li>
                         <!--<li class="{% nav_active request 'tipo-sanguineo' %}"><a-->
                                 <!--href="{%url 'tipo-sanguineo'%}">Tipo Sanguineo</a></li>-->
                         <li><a href="#">Relatórios</a></li>
                     </ul>
                 </li>
                 <li><a href="#progressoes" aria-expanded="false" data-toggle="collapse"> <i
-                        class="icon-interface-windows"></i>Progressões</a>
+                        class="fas fa-file-invoice"></i>Progressões</a>
                     <ul id="progressoes"
                         class="collapse list-unstyled {% nav_active request 'lista|cadastro-progressao' 'show' %}">
                         <li class="{% nav_active request 'lista' %}"><a href="{%url 'lista'%}">Listar</a>
@@ -193,25 +219,52 @@
                     </ul>
                 </li>
 
+                 <li><a href="#portarias" aria-expanded="false" data-toggle="collapse"> <i
+                        class="fas fa-file-contract"></i>Portarias</a>
+                    <ul id="portarias"
+                        class="collapse list-unstyled {% nav_active request 'lista-portarias |portaria-form' 'show' %}">
+                        <li class="{% nav_active request 'lista-portarias' %}"><a href="{%url 'lista-portarias'%}">Listar</a>
+                        </li>
+                        <li class="{% nav_active request 'cadastro-estagio-probatorio' %}"><a
+                                href="{%url 'portaria-form'%}">Cadastrar</a></li>
+                    </ul>
+                </li>
 
-                <li><a href="tables.html"> <i class="icon-grid"></i>Editais</a></li>
-                <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Estágio Probatório </a></li>
+                  <li><a href="#estagios" aria-expanded="false" data-toggle="collapse"> <i
+                        class="fas fa-file-contract"></i>Estágios Probatórios</a>
+                    <ul id="estagios"
+                        class="collapse list-unstyled {% nav_active request 'lista-estagios |cadastro-estagio-probatorio' 'show' %}">
+                        <li class="{% nav_active request 'lista-estagios' %}"><a href="{%url 'lista-estagios'%}">Listar</a>
+                        </li>
+                        <li class="{% nav_active request 'cadastro-estagio-probatorio' %}"><a
+                                href="{%url 'cadastro-estagio-probatorio'%}">Cadastrar</a></li>
+                    </ul>
+                </li>
+
+
+                <li><a href="tables.html"> <i class="fas fa-address-book"></i>Editais</a></li>
+                <li><a href="{% url 'cadastro-estagio-probatorio' %}"> <i class="fa fa-bar-chart"></i>Estágios Probatórios </a></li>
                 <li><a href="forms.html"> <i class="icon-padnote"></i>Lista Aniversários</a></li>
 
             </ul>
+            {% endif %}
 
-            <span class="heading">Extras</span>
+            {% if user.servidor.id %}
+                <span class="heading">Área Servidor</span>
             <ul class="list-unstyled">
-                <li><a href="tables.html"> <i class="icon-grid"></i>Funções Gratificadas</a></li>
-                <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Formação</a></li>
-                <li><a href="{% url 'admin:index' %}"> <i class="icon-padnote"></i>Administração do Sistema</a></li>
+                <li><a href="{% url 'servidor_perfil' %}"> <i class="fa fa-id-card"></i>Meu Perfil</a></li>
+                <li><a href="{% url 'servidor-progressoes' user.servidor.id %}"> <i class="fas fa-chart-line"></i>Minhas Progressões</a></li>
+                <li><a href="charts.html"> <i class="icon-padnote"></i>Meu Estágio Probatório</a></li>
+                <li><a href="{% url 'admin:index' %}"> <i class="fas fa-sliders-h"></i>Administração do Sistema</a></li>
             </ul>
+
+            {% endif %}
         </nav>
         <div class="content-inner">
             <!-- Page Header-->
             <header class="page-header">
                 <div class="container-fluid">
-                    <h2 class="no-margin-bottom">Painel</h2>
+                    <h2 class="no-margin-bottom">{% block titulo %} {% endblock %}</h2>
                 </div>
             </header>
 

@@ -11,16 +11,17 @@ from servidores.models import Servidor
 
 class Progressao(models.Model):
     servidor = models.ForeignKey(Servidor, on_delete=models.PROTECT)
-    tipo_progressao_docente = models.CharField(choices=const.TIPO_PROGRESSAO_DOCENTE, max_length=2, null=True, blank=True)
-    tipo_progressao_tae = models.CharField(choices=TIPO_PROGRESSAO_TAE, max_length=1, null=True, blank=True)
+    tipo_progressao_docente = models.CharField("Tipo de Progressão Docente",choices=const.TIPO_PROGRESSAO_DOCENTE, max_length=2, null=True, blank=True)
+    tipo_progressao_tae = models.CharField("Tipo de Progressão TAE",choices=TIPO_PROGRESSAO_TAE, max_length=1, null=True, blank=True)
     classe_docente = models.CharField(choices=const.CLASSE_DOCENTE, max_length=1, null=True, blank=True)
     nivel_docente = models.CharField(choices=const.NIVEL_DOCENTE, max_length=1, null=True, blank=True)
     nivel_capacitacao = models.CharField(choices=const.NIVEL_TAE, max_length=1, null=True, blank=True)
     padrao_tae = models.CharField(choices=const.PADRAO_TAE, max_length=2, null=True, blank=True)
-    data_progressao = models.DateField()
-    carga_horaria_apresentada = models.IntegerField()
-    carga_horaria_excedente = models.IntegerField()
-    homologacao = models.FileField(upload_to="homologacao", null=True, blank=True)
+    data_progressao = models.DateField("Data Progressão")
+    carga_horaria_apresentada = models.IntegerField("Carga Horária Apresentada")
+    carga_horaria_exigida = models.IntegerField("Carga Horária Exigida")
+    carga_horaria_excedente = models.IntegerField(null=True, blank=True)
+    homologacao = models.FileField("Comprovante",upload_to="homologacao", null=True, blank=True)
     portaria = models.OneToOneField(Portaria, on_delete=models.CASCADE)
     data_prox_progressao = models.DateField(null=True, blank=True)
 
@@ -42,6 +43,7 @@ def callback_progressao(sender, instance, *args, **kwargs):
 
     elif instance.tipo_progressao_tae is not None:
         instance.data_prox_progressao = (instance.data_progressao + relativedelta(years=+1, months=+6))
-
+        if instance.tipo_progressao_docente == 2:
+            instance.carga_horaria_excedente = instance.carga_horaria_apresentada - instance.carga_horaria_exigida;
 
 

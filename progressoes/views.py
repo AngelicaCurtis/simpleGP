@@ -21,6 +21,7 @@ class Cadastro(CreateView):
               "padrao_tae",
               "data_progressao",
               "carga_horaria_apresentada",
+              "carga_horaria_exigida",
               "homologacao",
               "portaria"]
 

@@ -1,0 +1,13 @@
+{% autoescape off %}
+
+Olá {{user.get_first_name}}, seja bem vindo(a) ao Simple GP!
+Seu cadastro foi criado com sucesso!
+Seu login de acesso é: {{ user.get_username }}
+Agora é só clicar no link abaixo para definir sua senha!
+
+{{ protocol}}://{{domain}}{% url 'password_reset_confirm' uidb64=uid token=token %}
+
+Atenciosamente,
+Equipe Simple GP
+
+{% endautoescape off %}

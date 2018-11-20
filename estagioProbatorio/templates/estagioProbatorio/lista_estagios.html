@@ -1,0 +1,220 @@
+{% extends 'cabecalho.html' %}
+{% load bootstrap %}
+{% load minhas_tags %}
+
+{% block title %}Simple GP|Lista Servidores{% endblock %}
+
+{% block titulo %} Estágios Probatórios {% endblock %}
+{% block main %}
+
+<!-- Page Header-->
+
+<!-- Page Header-->
+
+<section class="dashboard-counts no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row bg-white has-shadow">
+
+
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-close">
+                        <div class="dropdown">
+                            <button type="button" id="closeCard2" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i>
+                            </button>
+                            <div aria-labelledby="closeCard2" class="dropdown-menu dropdown-menu-right has-shadow"><a
+                                    href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a
+                                    href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                        </div>
+                    </div>
+
+
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">Estágios Probatórios Vigentes</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Servidor</th>
+                                    <th>Cargo</th>
+                                    <th>Campus</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for object in object_list %}
+                                <tr>
+                                    <th scope="row">{{object.servidor}}</th>
+
+                                    {% if object.servidor.cargo != None %}
+                                    <td>{{object.servidor.cargo}}</td>
+                                    {% else %}
+                                    <td>{{object.servidor.area}}</td>
+                                    {% endif %}
+
+                                    <td>{{object.servidor.campus}}</td>
+
+                                    {% if object.portaria_homologacao_id != None %}
+                                    <td>{{object.servidor.portaria}}</td>
+                                    {% else %}
+                                    <td>Não homologado</td>
+                                    {% endif %}
+
+                                    <td><a href="#detalhe-{{object.id}}" aria-expanded="false" data-toggle="collapse"><i
+                                            class="fa fa-plus"></i></a></td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="5" style="padding: 0">
+                                        <ul id="detalhe-{{object.id}}" class="collapse list-unstyled">
+
+                                            <table class="table table-striped subtable">
+                                                <thead>
+                                                <tr>
+                                                    <th>Ordem Avaliação</th>
+                                                    <th>Data Avaliação</th>
+                                                    <th>Nota da Chefia</th>
+                                                    <th>Nota do Servidor</th>
+                                                    <th>Concluída</th>
+                                                    <th>Editar</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                {% for aval in object.avaliacao_set.all %}
+                                                <tr>
+
+                                                    <td>{{ aval.ordem }}</td>
+
+                                                    <td>{{ aval.data }}</td>
+
+                                                    {% if aval.nota_aval_chefia != None %}
+                                                        <td>{{aval.nota_aval_chefia}}</td>
+                                                    {% else %}
+                                                        <td>-</td>
+                                                    {% endif %}
+
+                                                    {% if aval.nota_aval_servidor != None %}
+                                                        <td>{{aval.nota_aval_servidor}}</td>
+                                                    {% else %}
+                                                        <td>-</td>
+                                                    {% endif %}
+
+                                                    <td>
+                                                    {% if aval.status %}
+                                                        <i class="fas fa-clipboard-check"></i>
+                                                    {% else %}
+                                                        <i class="far fa-calendar-times"></i>
+                                                        {% endif%}
+                                                    </td>
+                                                    <td><a href="{% url 'atualizar-avaliacao' aval.id %}"><i class="far fa-edit size:2x"></i></a></td>
+
+                                                </tr>
+                                                {%empty%}
+                                                <tr>
+                                                    <td colspan="4">Ainda não há registros!</td>
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </ul>
+                                    </td>
+                                </tr>
+
+
+                                {% empty%}
+                                <tr>
+                                    <td colspan="4">Desculpe, ainda não existem progressões cadastradas!</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                            <!--<nav aria-label="Page navigation example">-->
+                            <!--<ul class="pagination justify-content-center">-->
+                            <!--<li class="page-item">-->
+                            <!--<a class="page-link" href="?page=1"-->
+                            <!--tabindex="-1">Inicio</a>-->
+                            <!--</li>-->
+
+                            <!--{% for i in objectes.paginator.page_range %}-->
+                            <!--{% if i <= objectes.number|add:5 and i >= objectes.number|add:-5 %}-->
+                            <!--<li-->
+                            <!--{% if objectes.number == forloop.counter %}-->
+                            <!--class="page-item active"-->
+                            <!--{% else %}-->
+                            <!--class="page-item"-->
+                            <!--{% endif %}}>-->
+                            <!--<a class="page-link"-->
+                            <!--href="?page={{ forloop.counter }}">-->
+                            <!--{{ forloop.counter }}-->
+                            <!--</a>-->
+                            <!--</li>-->
+                            <!--{% endif %}-->
+                            <!--{% endfor %}-->
+
+                            <!--<li class="page-item">-->
+                            <!--<a class="page-link"-->
+                            <!--href="?page={{ objectes.paginator.num_pages }}">Fim</a>-->
+                            <!--</li>-->
+                            <!--</ul>-->
+                            <!--</nav>-->
+
+                            <a href="{% url 'cadastro-estagio-probatorio' %}" class="btn btn-primary float-left">Cadastrar</a>
+
+                            <a href="{% url 'lista-estagios' %}" class="btn btn-default float-right">Voltar</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal Deletar Servidor-->
+    <div id="modal-deletar" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+         aria-labelledby="mySmallModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Atenção!</h5>
+                </div>
+                <div class="modal-body">
+                    Deseja remover <span id="modal-remover-nome"></span>?
+                </div>
+                <div class="modal-footer">
+                    <form method="POST" id="modal-deletar-form">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-danger" type="submit">Confirmar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    function removerServidor(nome, url) {
+        let modal = $("#modal-deletar");
+        $("#modal-remover-nome").text(nome);
+        $("#modal-deletar-form").attr('action', url);
+        modal.modal();
+    }
+
+
+
+
+
+
+</script>
+{% endblock %}

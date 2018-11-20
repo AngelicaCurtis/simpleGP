@@ -4,13 +4,15 @@
 
 {% block title %}Cadastro Servidor{% endblock %}
 
+{% block titulo %}Servidores {% endblock %}
+
 {% block main %}
 
 <section class="dashboard-counts no-padding-bottom">
     <div class="container-fluid">
         <div class="row bg-white has-shadow">
 
-            <h3>Cadastro Novo Servidor</h3>
+            <h3>Atualizar Cadastro</h3>
             <form method="POST" enctype="multipart/form-data">
 
                 {% csrf_token %}
