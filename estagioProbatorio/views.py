@@ -1,8 +1,9 @@
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import request
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, UpdateView
+from django.views.generic import ListView, UpdateView, DetailView
 
 from estagioProbatorio.forms import EstagioProbatorioForm, AvaliacaoForm
 from estagioProbatorio.models import Avaliacao, EstagioProbatorio
@@ -40,7 +41,6 @@ class EstagioProbatorioList(ListView):
     model = EstagioProbatorio
 
 
-
 class AvaliacaoUpdate(LoginRequiredMixin, UpdateView):
     model = Avaliacao
     fields = [
@@ -54,3 +54,7 @@ class AvaliacaoUpdate(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('lista-estagios')
+
+
+class MeuEstagioProbatorio(ListView):
+    pass

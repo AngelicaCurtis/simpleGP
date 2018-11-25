@@ -10,12 +10,9 @@
 <!-- Page Header-->
 
 
-
 <section class="dashboard-counts no-padding-bottom">
     <div class="container-fluid">
         <div class="row bg-white has-shadow">
-
-
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-close">
@@ -30,177 +27,152 @@
                     </div>
                 </div>
 
-                <div class="card-body text-right">
-                    {% if object.foto.url != None %}
-                    <div class="client-avatar"><img src="{{object.foto.url}}" alt="..."
-                                                    class="img-fluid rounded-circle img-thumbnail"
-                                                    style="
-                                                                    height:200px;
-                                                                    width:auto;
-                                                                    border-radius: 10px 70px !important;">
-                    </div>
-                    {% endif %}
+                <div class="row">
+                    <div class="">
+                        <div class="card-body">
+
+                            <div class="float-md-right">
+                                <div class="card-body">
+                                    {% if object.foto.url != None %}
+                                    <div class="client-avatar text-center"><img src="{{object.foto.url}}" alt="..."
+                                                                                class="img-fluid  img-thumbnail">
+                                    </div>
+                                    {% endif %}
+                                    <hr>
+                                    <div class="client-title">
+                                        <h3> {{object.nome}} {{object.sobrenome}}</h3>
+                                        <p>{{object.categoria}}</p>
+                                        {% if object.cargo == None %}
+                                        <span>Área: {{object.area}} </span>
+                                        {% else %}
+                                        <span>{{object.cargo}} </span>
+                                        <p>Nível: {{object.cargo.nivel}}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h5 class="card-title">Progressões</h5>
 
 
-                    <div class="client-title">
-                        <h3> {{object.nome}} {{object.sobrenome}}</h3>
-                        <p>{{object.categoria}}</p>
-                        {% if object.cargo == None %}
-                        <span>Área: {{object.area}} </span>
-                        {% else %}
-                        <span>{{object.cargo}} </span>
-                        <p>Nível: {{object.cargo.nivel}}</p>
-                        {% endif %}
+                            {% if object.categoria.id == 'TAE' %}
+                            <h6 class="card-subtitle mb-2 text-muted">Informações Sobre Progressões TAE</h6>
+
+                            <br/>
+                            <h6>Progressão por Mérito</h6>
+                            <p class="text-justify">A progressão por mérito profissional é a mudança do padrão de
+                                vencimento (que vai
+                                do 1 ao
+                                16, dentro de cada classe), a cada 18 meses de efetivo exercício.
+                            </p>
+                            <h6>Progressão por Capacitação</h6>
+                            <p class="text-justify"> A progressão por capacitação profissional é a mudança de nível de
+                                capacitação,
+                                dentro do
+                                mesmo cargo e da mesma classe, decorrente da obtenção pelo servidor de
+                                certificação em
+                                programa de capacitação. Essa mudança, por exemplo, pode ser do nível I para o
+                                II,
+                                chegando até o IV. O curso deverá ser compatível com o cargo ocupado, o ambiente
+                                organizacional e a carga horária mínima exigida. Esses requisitos são analisados
+                                no
+                                processo de progressão.
+                                Para requerer a progressão funcional por esse tipo de processo, o servidor
+                                deverá
+                                respeitar o interstício de 18 meses.</p>
+                            <small class="text-right"><a href="http://www.planalto.gov.br/ccivil_03/_ato2004-2006/2005/lei/l11091.htm">Lei nº 11.091/2005</a></small>
+
+                            <p><strong>TABELA PARA PROGRESSÃO POR CAPACITAÇÃO PROFISSIONAL</strong></p>
+                            <p>(Redação dada pela <a href="http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12772.htm">Lei nº 12.772</a>, de 2012)</p>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Nível de Classificação</th>
+                                        <th>Nível de Capacitação</th>
+                                        <th>Cargo Horária de Capacitação</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td rowspan="4">{{object.cargo.nivel}}</td>
+
+                                        <td>I</td>
+
+                                        <td>Exigência Mínima do cargo</td>
+                                    </tr>
+                                    <tr>
+
+                                        <td>II</td>
+
+                                        {% if object.cargo.nivel == 'C' %}
+                                        <td>60 horas</td>
+                                        {% elif object.cargo.nivel == 'D' %}
+                                        <td>90 horas</td>
+                                        {% else %}
+                                        <td>120 horas</td>
+                                        {% endif %}
+                                    </tr>
+                                    <tr>
+
+                                        <td>III</td>
+                                        {% if object.cargo.nivel == 'C' %}
+                                        <td>90 horas</td>
+                                        {% elif object.cargo.nivel == 'D' %}
+                                        <td>120 horas</td>
+                                        {% else %}
+                                        <td>150 horas</td>
+                                        {% endif %}
+                                    </tr>
+                                    <tr>
+                                        <td>IV</td>
+                                        {% if object.cargo.nivel == 'C' %}
+                                        <td>120 horas</td>
+                                        {% elif object.cargo.nivel == 'D' %}
+                                        <td>150 horas</td>
+                                        {% else %}
+                                        <td>Aperfeiçoamento ou curso de capacitação igual ou superior a 180 horas</td>
+                                        {% endif %}
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {% elif object.categoria.id == 'DOC' %}
+
+                            <h6 class="card-subtitle mb-2 text-muted">Informações Sobre Progressões Docente</h6>
+                            <h7>Conforme <a
+                                    href="http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12772.htm"
+                                    target="_blank">Lei nº. 12.772/2012</a></h7>
+
+                            <p class="mb-0">
+                            <p>Art. 12. O desenvolvimento na Carreira de Magistério Superior ocorrerá mediante
+                                <b>progressão
+                                    funcional e promoção</b>.
+                            <p>§ 2o A progressão na Carreira de Magistério Superior ocorrerá com base nos
+                                critérios
+                                gerais estabelecidos nesta Lei e observará, cumulativamente:
+                            </p>I - o cumprimento do interstício de 24 (vinte e quatro) meses de efetivo
+                            exercício em
+                            cada nível; e</p>
+                            <p>II - aprovação em avaliação de desempenho.</p>
+                            § 3o A promoção ocorrerá observados o interstício mínimo de 24 (vinte e quatro)
+                            meses no
+                            último nível de cada Classe antecedente àquela para a qual se dará a promoção e,
+                            ainda, as
+                            seguintes condições:</p>
 
 
-                    </div>
-                </div>
-
-                <div class="card-body text-left">
-                    <div class="progressoes">
-                        {% if object.categoria.id == 'TAE' %}
-                        <h5>Informações Sobre Progressões TAE</h5>
-                        <br/>
-                        <h6>Progressão por Mérito</h6>
-                        <p>A progressão por mérito profissional é a mudança do padrão de vencimento (que vai do 1 ao 16, dentro de cada classe), a cada 18 meses de efetivo exercício.
-</p>
-                        <h6>Progressão por Capacitação</h6>
-                        <p> A progressão por capacitação profissional é a mudança de nível de capacitação, dentro do mesmo cargo e da mesma classe, decorrente da obtenção pelo servidor de certificação em programa de capacitação. Essa mudança, por exemplo, pode ser do nível I para o II, chegando até o IV. O curso deverá ser compatível com o cargo ocupado, o ambiente organizacional e a carga horária mínima exigida. Esses requisitos são analisados no processo de progressão.
-                            Para requerer a progressão funcional por esse tipo de processo, o servidor deverá respeitar o interstício de 18 meses.</p>
-
-                        <p><strong>TABELA PARA PROGRESSÃO POR CAPACITAÇÃO PROFISSIONAL</strong></p>
-                          <p>(Redação dada pela Lei nº 12.772, de 2012)</p>
-
-                            {% if object.cargo.nivel == 'C' %}
-                               <table class="table table-bordered">
-                                   <thead>
-                                   <tr>
-                                       <th>Nível de Classificação</th>
-                                       <th>Nível de Capacitação</th>
-                                       <th>Cargo Horária de Capacitação</th>
-                                   </tr>
-                                   </thead>
-                                   <tbody>
-                                   <tr>
-                                       <td rowspan="4">C</td>
-
-                                       <td>I</td>
-
-                                       <td>Exigência Mínima do cargo</td>
-                                   </tr>
-                                   <tr>
-
-                                       <td>II</td>
-                                       <td>60 horas</td>
-                                   </tr>
-                                   <tr>
-
-                                       <td>III</td>
-                                       <td>90 horas</td>
-                                   </tr>
-                                     <tr>
-
-                                       <td>IV</td>
-                                       <td>120 horas</td>
-                                   </tr>
-                                   </tbody>
-
-                               </table>
-
-                            {% elif object.cargo.nivel == 'D' %}
-                                         <table class="table table-bordered">
-                                   <thead>
-                                   <tr>
-                                       <th>Nível de Classificação</th>
-                                       <th>Nível de Capacitação</th>
-                                       <th>Cargo Horária de Capacitação</th>
-                                   </tr>
-                                   </thead>
-                                   <tbody>
-                                   <tr>
-                                       <td rowspan="4">D</td>
-
-                                       <td>I</td>
-
-                                       <td>Exigência Mínima do cargo</td>
-                                   </tr>
-                                   <tr>
-
-                                       <td>II</td>
-                                       <td>90 horas</td>
-                                   </tr>
-                                   <tr>
-
-                                       <td>III</td>
-                                       <td>120 horas</td>
-                                   </tr>
-                                     <tr>
-
-                                       <td>IV</td>
-                                       <td>150 horas</td>
-                                   </tr>
-                                   </tbody>
-
-                               </table>
-                            {% else %}
-
-                                       <table class="table table-bordered">
-                                   <thead>
-                                   <tr>
-                                       <th>Nível de Classificação</th>
-                                       <th>Nível de Capacitação</th>
-                                       <th>Cargo Horária de Capacitação</th>
-                                   </tr>
-                                   </thead>
-                                   <tbody>
-                                   <tr>
-                                       <td rowspan="4">E</td>
-
-                                       <td>I</td>
-
-                                       <td>Exigência Mínima do cargo</td>
-                                   </tr>
-                                   <tr>
-
-                                       <td>II</td>
-                                       <td>120 horas</td>
-                                   </tr>
-                                   <tr>
-
-                                       <td>III</td>
-                                       <td>150 horas</td>
-                                   </tr>
-                                     <tr>
-
-                                       <td>IV</td>
-                                       <td>Aperfeiçoamento ou curso de capacitação igual ou superior a 180 horas</td>
-                                   </tr>
-                                   </tbody>
-
-                               </table>
                             {% endif %}
 
-                        {% elif object.categoria.id  == 'DOC' %}
-
-                        <h6>Informações Sobre Progressão Docente</h6>
-                        <h7>Conforme <a href="http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12772.htm" target="_blank">Lei nº. 12.772/2012</a></h7>
-
-                        <p class="mb-0">
-                        <p>Art. 12.  O desenvolvimento na Carreira de Magistério Superior ocorrerá mediante <b>progressão funcional e promoção</b>.
-                        <p>§ 2o  A progressão na Carreira de Magistério Superior ocorrerá com base nos critérios gerais estabelecidos nesta Lei e observará, cumulativamente:
-                        </p>I - o cumprimento do interstício de 24 (vinte e quatro) meses de efetivo exercício em cada nível; e</p>
-                        <p>II - aprovação em avaliação de desempenho.</p>
-                        § 3o  A promoção ocorrerá observados o interstício mínimo de 24 (vinte e quatro) meses no último nível de cada Classe antecedente àquela para a qual se dará a promoção e, ainda, as seguintes condições:</p>
-
-
-                        {% endif %}
-
+                        </div>
                     </div>
-
                 </div>
 
             </div>
         </div>
+
     </div>
 </section>
 
@@ -216,14 +188,14 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                {% if object.categoria.id  == 'DOC' %}
+                                {% if object.categoria.id == 'DOC' %}
                                 <th>Classe/Nível</th>
                                 {% else %}
                                 <th>Nível Capacitação</th>
                                 {% endif %}
                                 <th>Data</th>
                                 <th>Portaria</th>
-                                 {% if prog_a.carga_horaria_excedente != None %}
+                                {% if prog_a.carga_horaria_excedente != None %}
                                 <th>Carga Horária Exced.</th>
                                 {% else %}
                                 {% endif %}
@@ -233,7 +205,7 @@
                             <tbody>
                             {% for prog_a in progressoes_a %}
                             <tr>
-                                {% if object.categoria.id  == 'DOC' %}
+                                {% if object.categoria.id == 'DOC' %}
                                 <td>Classe D{{prog_a.classe_docente}} / Nível {{prog_a.nivel_docente}}</td>
                                 {% else %}
                                 <td>{{ prog_a.nivel_capacitacao }}</td>
@@ -242,7 +214,8 @@
                                 <td>{{ prog_a.data_progressao }}</td>
 
                                 {% if prog_a.portaria.portaria.url != None %}
-                                <td><a href="{{prog_a.portaria.portaria.url}}" target="_blank">{{prog_a.portaria}}</a></td>
+                                <td><a href="{{prog_a.portaria.portaria.url}}" target="_blank">{{prog_a.portaria}}</a>
+                                </td>
                                 {% else %}
                                 <td><a>{{prog_a.portaria}}</a></td>
                                 {% endif %}
@@ -253,13 +226,13 @@
                                 {% endif %}
 
                                 {% if prog_a.nivel_capacitacao >= '4' %}
-                                        <td>Não há</td>
+                                <td>Não há</td>
                                 {% else %}
                                 <td>{{ prog_a.data_prox_progressao}}</td>
                                 {% endif %}
                             </tr>
                             {%empty%}
-                            <tr >Ainda não há registros!</tr>
+                            <tr>Ainda não há registros!</tr>
                             {% endfor %}
                             </tbody>
                         </table>
@@ -288,7 +261,8 @@
                                 <td>{{ prog_b.padrao_tae }}</td>
                                 <td>{{ prog_b.data_progressao }}</td>
                                 {% if prog_b.portaria.portaria.url != None %}
-                                <td><a href="{{prog_b.portaria.portaria.url}}" target="_blank">{{prog_b.portaria}}</a></td>
+                                <td><a href="{{prog_b.portaria.portaria.url}}" target="_blank">{{prog_b.portaria}}</a>
+                                </td>
                                 {% else %}
                                 <td>{{prog_b.portaria}}</td>
                                 {% endif %}
@@ -296,7 +270,7 @@
                             </tbody>
                             </tr>
                             {%empty%}
-                            <tr><p class="alert alert-warning">Ainda não há registros!</p></tr>
+                            <tr>Ainda não há registros!</tr>
                             {% endfor %}
                         </table>
                     </div>

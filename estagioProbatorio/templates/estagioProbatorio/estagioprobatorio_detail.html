@@ -1,0 +1,138 @@
+{% extends 'cabecalho.html' %}
+{% load bootstrap %}
+{% load static %}
+
+
+{% block title %}Esttágio Probatório{% endblock %}
+
+
+{% block main %}
+
+<section class="dashboard-counts no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row bg-white has-shadow">
+
+            <!-- Form Elements -->
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-close">
+                        <div class="dropdown">
+                            <button type="button" id="closeCard5" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false"
+                                    class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                            <div aria-labelledby="closeCard5" class="dropdown-menu dropdown-menu-right has-shadow"><a
+                                    href="#"
+                                    class="dropdown-item remove">
+                                <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i
+                                    class="fa fa-gear"></i>Edit</a></div>
+                        </div>
+                    </div>
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">Estágio Probatório</h3>
+                    </div>
+                    <div class="card-body">
+                        <form class="form-horizontal">
+
+                            <div class="row">
+                                <div class="col col-xs-12 col-sm-5 col-md-4 col-lg-3 col-sm-order-last">
+                                    <div class="card">
+                                        <div class="card-body text-sm-right">
+                                        {% if object.foto.url != None %}
+                                        <div class="client-avatar"><img src="{{object.foto.url}}" alt="..."
+                                                                        class="img-fluid rounded-circle img-thumbnail"
+                                                                        style="
+                                                                    height:200px;
+                                                                    width:auto;
+                                                                    border-radius: 10px 70px !important;">
+                                        </div>
+                                        {% endif %}
+                                            <hr>
+                                        <div class="client-title">
+                                            <h3> {{object.servidor}}</h3>
+                                            <p>{{object.servidor.categoria}}</p>
+                                            {% if object.servidor.cargo == None %}
+                                            <span>Área: {{object.servidor.area}} </span>
+                                            {% else %}
+                                            <span>{{object.servidor.cargo}} </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="col col-xs-12 col-sm-7 col-md-8 col-lg-9  order-sm-first">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Número Processo</label>
+                                        <p>
+                                            {{object.processo}}
+                                        </p>
+                                    </div>
+
+                                   <table>
+                                       <thead>
+                                        <th></th>
+                                       </thead>
+                                       <tbody>
+
+                                                {% for aval in object.avaliacao_set.all %}
+                                                <tr>
+
+                                                    <td>{{ aval.ordem }}</td>
+
+                                                    <td>{{ aval.data }}</td>
+
+                                                    {% if aval.nota_aval_chefia != None %}
+                                                        <td>{{aval.nota_aval_chefia}}</td>
+                                                    {% else %}
+                                                        <td>-</td>
+                                                    {% endif %}
+
+                                                    {% if aval.nota_aval_servidor != None %}
+                                                        <td>{{aval.nota_aval_servidor}}</td>
+                                                    {% else %}
+                                                        <td>-</td>
+                                                    {% endif %}
+
+                                                    <td>
+                                                    {% if aval.status %}
+                                                        <i class="fas fa-clipboard-check"></i>
+                                                    {% else %}
+                                                        <i class="far fa-calendar-times"></i>
+                                                        {% endif%}
+                                                    </td>
+                                                    <td><a href="{% url 'atualizar-avaliacao' aval.id %}"><i class="far fa-edit size:2x"></i></a></td>
+
+                                                </tr>
+                                                {%empty%}
+                                                <tr>
+                                                    <td colspan="4">Ainda não há registros!</td>
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+
+
+
+
+
+
+                                    <div class="form-group">
+                                        <div>
+                                            <a href="{% url 'lista-servidores' %}" class="btn btn-secondary">Voltar</a>
+
+                                            <a class="btn btn-primary" href="{% url 'servidor-update' servidor.id %}">
+                                                <i class="far fa-edit"></i>Editar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock%}

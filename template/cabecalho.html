@@ -242,9 +242,9 @@
                 </li>
 
 
-                <li><a href="tables.html"> <i class="fas fa-address-book"></i>Editais</a></li>
-                <li><a href="{% url 'cadastro-estagio-probatorio' %}"> <i class="fa fa-bar-chart"></i>Estágios Probatórios </a></li>
                 <li><a href="forms.html"> <i class="icon-padnote"></i>Lista Aniversários</a></li>
+                <li><a href="{% url 'admin:index' %}"> <i class="fas fa-sliders-h"></i>Administração do Sistema</a></li>
+
 
             </ul>
             {% endif %}
@@ -254,8 +254,7 @@
             <ul class="list-unstyled">
                 <li><a href="{% url 'servidor_perfil' %}"> <i class="fa fa-id-card"></i>Meu Perfil</a></li>
                 <li><a href="{% url 'servidor-progressoes' user.servidor.id %}"> <i class="fas fa-chart-line"></i>Minhas Progressões</a></li>
-                <li><a href="charts.html"> <i class="icon-padnote"></i>Meu Estágio Probatório</a></li>
-                <li><a href="{% url 'admin:index' %}"> <i class="fas fa-sliders-h"></i>Administração do Sistema</a></li>
+                <li><a href="{% url 'meu-estagio'%}"></i>Meu Estágio Probatório</a></li>
             </ul>
 
             {% endif %}

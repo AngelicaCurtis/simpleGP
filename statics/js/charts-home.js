@@ -212,7 +212,7 @@ $(document).ready(function () {
             }
         },
         data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "November", "December"],
+            labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junnho", "Julho", "Agosto", "Setembro", "Novembro", "Dezembro"],
             datasets: [
                 {
                     label: "Data Set 1",
